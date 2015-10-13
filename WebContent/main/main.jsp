@@ -3,13 +3,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
 <title>MAIN</title>
 </head>
 
 <body>
   <header>
     <h1><strong>shoppingmall</strong></h1>
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
+
   </header>
   
   <nav>
