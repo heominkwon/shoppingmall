@@ -6,12 +6,23 @@ public interface ProductInterface {
 
 	Connection getConnection() throws Exception;
 
-	void InsertDTO(ProductDTO product);
+	void insertProduct(ProductDTO product) throws Exception;
 
-	void DeleteDTO(ProductDTO product);
+	void deleteProduct(ProductDTO product) throws Exception;
 
-	void UPDATEDTO(ProductDTO product);
+	void updateProduct(ProductDTO product) throws Exception;
 
-	void SelectDTO(ProductDTO product);
-
+	ProductDTO selectProduct(ProductDTO product) throws Exception;
+	
+	void deleteProduct(int p_no) throws Exception;
+	
+	void deleteProdut(String p_name) throws Exception;
+	
+	void updateCategoryNO(int categoryNO) throws Exception;
+	
+	void updateName(String Name) throws Exception;
+	
+	void updatePrice(int price) throws Exception;
+	
+	void updateCount(int count) throws Exception;
 }
