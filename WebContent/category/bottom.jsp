@@ -8,7 +8,6 @@
 	
 <body>
 bottom
-<a href="./addProduct.jsp">상품등록</a>
 
 
 </body>
