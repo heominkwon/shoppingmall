@@ -9,20 +9,16 @@ public interface ProductInterface {
 	void insertProduct(ProductDTO product) throws Exception;
 
 	void deleteProduct(ProductDTO product) throws Exception;
-
+	
 	void updateProduct(ProductDTO product) throws Exception;
 
 	ProductDTO selectProduct(ProductDTO product) throws Exception;
 	
-	void deleteProduct(int p_no) throws Exception;
+	void updateCategoryNO(String productName,int categoryNO) throws Exception;
 	
-	void deleteProdut(String p_name) throws Exception;
+	void updateName(String productName, String Name) throws Exception;
 	
-	void updateCategoryNO(int categoryNO) throws Exception;
+	void updatePrice(String productName, int price) throws Exception;
 	
-	void updateName(String Name) throws Exception;
-	
-	void updatePrice(int price) throws Exception;
-	
-	void updateCount(int count) throws Exception;
+	void updateCount(String productName, int count) throws Exception;
 }

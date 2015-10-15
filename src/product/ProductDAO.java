@@ -32,7 +32,7 @@ public class ProductDAO implements ProductInterface{
 	@Override
 	public void insertProduct(ProductDTO product) throws Exception{
 		
-		Connection conn 		= null;
+		Connection 		  conn 	= null;
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -57,7 +57,8 @@ public class ProductDAO implements ProductInterface{
 
 	@Override
 	public void deleteProduct(ProductDTO product) throws Exception{
-		Connection conn 		= null;
+		
+		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -67,7 +68,118 @@ public class ProductDAO implements ProductInterface{
 			pstmt.setString(1, product.getP_name());
 			
 			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+	}
+	
+	@Override
+	public void updateProduct(ProductDTO product) throws Exception {
 		
+		Connection 		  conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE PRODUCT SET P_CNO=?, P_NAME=?, P_PRICE=?, P_COUNT=?"
+					+ "WHERE P_NO=?");
+			pstmt.setInt(1, product.getP_cno());
+			pstmt.setString(2, product.getP_name());
+			pstmt.setInt(3, product.getP_price());
+			pstmt.setInt(4, product.getP_count());
+			pstmt.setInt(5, product.getP_no());
+			
+			pstmt.executeQuery();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		
+	}
+
+	@Override
+	public ProductDTO selectProduct(ProductDTO product) throws Exception{
+		
+		Connection 		  conn 	   = null;
+		PreparedStatement pstmt    = null;
+		ResultSet         rs 	   = null;
+		ProductDTO        dto      = null;
+
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT * FROM PRODUCT WHERE P_NAME = ?");
+			pstmt.setString(1, product.getP_name());
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setP_no(rs.getInt(1));
+				dto.setP_cno(rs.getInt(2));
+				dto.setP_name(rs.getString(3));
+				dto.setP_price(rs.getInt(4));
+				dto.setP_count(rs.getInt(5));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();} 	catch (SQLException se) {}
+		}
+		return dto;
+	}
+
+	@Override
+	public void updateCategoryNO(String productName, int categoryNO) throws Exception{
+		
+		Connection		  conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"UODATE PRODUCT SET P_CNO=?"
+					+ "WHERE P_NAME=?");
+			pstmt.setInt(1, categoryNO);
+			pstmt.setString(2, productName);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null)  try {conn.close();} catch (SQLException se) {}
+		}
+	}
+
+	@Override
+	public void updateName(String productName, String Name)  throws Exception{
+		
+		Connection 		  conn  = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE PRODUCT SET P_NAME=?"
+					+ "WHERE P_NAME=?");
+			pstmt.setString(1, Name);
+			pstmt.setString(2, productName);
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -77,62 +189,50 @@ public class ProductDAO implements ProductInterface{
 	}
 
 	@Override
-	public void updateProduct(ProductDTO product) throws Exception{
+	public void updatePrice(String productName, int price)  throws Exception{
 		
-	}
-
-	@Override
-	public ProductDTO selectProduct(ProductDTO product) throws Exception{
-		Connection conn 		= null;
+		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT * FROM ");
+					"UPDATE PRODUCT SET P_PRICE=?"
+					+ "WHERE P_NAME=?");
+			pstmt.setInt(1, price);
+			pstmt.setString(2, productName);
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
-		
-		return product;
-		
 	}
 
 	@Override
-	public void updateCategoryNO(int categoryNO) throws Exception{
-		// TODO Auto-generated method stub
+	public void updateCount(String productName, int count) throws Exception{
 		
-	}
-
-	@Override
-	public void updateName(String Name)  throws Exception{
-		// TODO Auto-generated method stub
+		Connection		  conn  = null;
+		PreparedStatement pstmt = null;
 		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE PRODUCT SET P_COUNT=?"
+					+ "WHER P_NAME=?");
+			pstmt.setInt(1, count);
+			pstmt.setString(2, productName);
+			
+			pstmt.executeUpdate();
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
 	}
-
-	@Override
-	public void updatePrice(int price)  throws Exception{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateCount(int count) throws Exception{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteProduct(int p_no) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteProdut(String p_name) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }
