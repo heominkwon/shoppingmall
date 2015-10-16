@@ -137,15 +137,15 @@ function checkIt()
 	<table width="1100" height="605" border="0" cellspacing="0" cellpadding="0">
 	
 	
-    <tr><td width ="200" align-"top"><img src="C:\Users\user1\Desktop\img\info0.gif"></td></tr>
+    <tr><td width ="200" align-"top"><img src="\jsp\img\info0.gif"></td></tr>
  
    <tr>
      
-        <td width="350" align="top"><img src="C:\Users\user1\Desktop\img\info1.gif"></td>  
-        <td width="350" rowspan="2"><img src="C:\Users\user1\Desktop\img\info3.gif"> </td>
+        <td width="350" align="top"><img src="\jsp\img\info1.gif"></td>  
+        <td width="350" rowspan="2"><img src="\jsp\img\info3.gif"> </td>
    </tr>
    <tr>
-   	 <td width="350" align="center"><img src="C:\Users\user1\Desktop\img\info2.gif"></td>
+   	 <td width="350" align="center"><img src="\jsp\img\info2.gif"></td>
    	 
   
    </tr>

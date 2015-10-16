@@ -31,47 +31,42 @@
 </script> 
 
 <div class="sky_slide">
-     <img src="C:\Users\user1\Desktop\img\main01.jpg" alt="클릭시 이동할 주소" />  
-     <img src="C:\Users\user1\Desktop\img\main03.jpg" alt="클릭시 이동할 주소" /> 
-     <img src="C:\Users\user1\Desktop\img\main02.jpg" alt="클릭시 이동할 주소" />
+     <img src="\jsp\img\main01.jpg" alt="클릭시 이동할 주소" />  
+     <img src="\jsp\img\main03.jpg" alt="클릭시 이동할 주소" /> 
+     <img src="\jsp\img\main02.jpg" alt="클릭시 이동할 주소" />
      
 </div> 
 </td>
 
 
 <td>
-<img src=C:\Users\user1\Desktop\img\1.gif>
+<img src=\jsp\img\1.gif>
 </td>
 
 <td >
-<img src=C:\Users\user1\Desktop\img\2.gif>
+<img src=\jsp\img\2.gif>
 </td>
 
 <td>
-<img src=C:\Users\user1\Desktop\img\3.gif>
+<img src=\jsp\img\3.gif>
 </td>
 </tr>
 
 <tr>
 <td>
-<img src=C:\Users\user1\Desktop\img\5.gif>
+<img src=\jsp\img\5.gif>
 </td>
 <td>
-<img src=C:\Users\user1\Desktop\img\6.gif>
+<img src=\jsp\img\6.gif>
 </td>
 <td>
-<img src=C:\Users\user1\Desktop\img\7.gif>
+<img src=\jsp\img\7.gif>
 </td>
 </tr> 
 
-
-
-
-
-
 <tr>
-<td><img src=C:\Users\user1\Desktop\img\8.gif align=right width=450 height=110></td>
- <td colspan=2><img src=C:\Users\user1\Desktop\img\9.gif width=450 height=110></td> 
+<td><img src=\jsp\img\8.gif align=right width=450 height=110></td>
+ <td colspan=2><img src=\jsp\img\9.gif width=450 height=110></td> 
 
 </tr>
 
