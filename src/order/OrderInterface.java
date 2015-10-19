@@ -5,43 +5,41 @@ import java.util.List;
 
 public interface OrderInterface {
 	
-	Connection getConnection();
+	Connection getConnection() throws Exception;
 	
-	void insertOrder(OrderDTO order);
+	void insertOrder(OrderDTO order) throws Exception;
 	
-	void deleteOrder(OrderDTO order);
+	void deleteOrder(OrderDTO order) throws Exception;
 	
-	void updateOrder(OrderDTO order);
+	void updateOrder(OrderDTO order) throws Exception;
 	
-	OrderDTO selectOrder(OrderDTO order);
+	OrderDTO selectOrder(OrderDTO order) throws Exception;
 	
-	List<OrderDTO> selectsOrder();
+	List<OrderDTO> selectsOrder() throws Exception;
 	
-	void delete_NO(int NEED_orderNO);
+	void delete_NO(int NEED_orderNO) throws Exception;
 	
-	void delete_MNO(int NEED_memberNO);
+	void delete_MNO(int NEED_memberNO) throws Exception;
 	
-	void updateNO_NO(int NEED_orderNO, int change_orderNO);
+	void updateNO_NO(int NEED_orderNO, int change_orderNO) throws Exception;
 	
-	void updateNO_MNO(int NEED_memberNO, int change_orderNO);
+	void updateNO_MNO(int NEED_memberNO, int change_orderNO) throws Exception;
 	
-	void updateMNO_NO(int NEED_orderNO, int change_memberNO);
+	void updateMNO_NO(int NEED_orderNO, int change_memberNO) throws Exception;
 	
-	void updateMNO_MNO(int NEED_memberNO, int change_memberNO);
+	void updateMNO_MNO(int NEED_memberNO, int change_memberNO) throws Exception;
 	
-	void updatePAY_NO(int NEED_orderNO, int change_PAY);
+	void updatePAY_NO(int NEED_orderNO, int change_PAY) throws Exception;
 	
-	void updatePAY_MNO(int NEED_memberNO, int change_PAY);
+	void updatePAY_MNO(int NEED_memberNO, int change_PAY) throws Exception;
 	
-	OrderDTO selectOrder(int NEED_orderNO);
+	OrderDTO selectOrder(int NEED_orderNO) throws Exception;
 	
-	List<OrderDTO> selectsOrder_PAY(int NEED_PAY);
+	List<OrderDTO> selectsOrders_PAY(int NEED_PAY) throws Exception;
 	
-	List<OrderDTO> selectsOrder_MNO(int NEED_memberNO);
+	List<OrderDTO> selectsOrders_MNO(int NEED_memberNO) throws Exception;
 	
-	int INTEGER_IsPaid(int NEED_orderNO);
+	int IsPaid(int NEED_orderNO) throws Exception;
 	
-	boolean BOOLEAN_IsPaid(int NEED_orderNO);
-	
-
+	List<Integer> selectsOrder_NO (int NEED_memberNO) throws Exception;
 }
