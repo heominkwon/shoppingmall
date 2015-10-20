@@ -40,9 +40,9 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERT INTO ORDERS"
-					+ "(O_NO, O_MNO, O_PAY)"
-					+ "VALUES"
+					"INSERT INTO ORDERS "
+					+ "(O_NO, O_MNO, O_PAY) "
+					+ "VALUES "
 					+ "(ORDER_SEQ.NEXTVAL, ?, ?)");
 			pstmt.setInt(1, order.getO_mno());
 			pstmt.setInt(2, order.getO_pay());
@@ -88,7 +88,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=?"
+					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, order.getO_mno());
 			pstmt.setInt(2, order.getO_pay());
@@ -116,9 +116,9 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY"
-					+ "FROM ORDERS"
-					+ "WHERE"
+					"SELECT O_NO, O_MNO, O_PAY "
+					+ "FROM ORDERS "
+					+ "WHERE "
 					+ "O_NO=?");
 			pstmt.setInt(1, order.getO_no());
 			
@@ -229,7 +229,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=?"
+					"UPDATE ORDERS SET O_NO=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, change_orderNO);
 			pstmt.setInt(2, NEED_orderNO);
@@ -253,7 +253,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_N=?"
+					"UPDATE ORDERS SET O_N=? "
 					+ "WHERE O_MNO=?");
 			pstmt.setInt(1, change_orderNO);
 			pstmt.setInt(2, NEED_memberNO);
@@ -277,7 +277,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_MNO=?"
+					"UPDATE ORDERS SET O_MNO=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, change_memberNO);
 			pstmt.setInt(2, NEED_orderNO);
@@ -301,7 +301,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_MNO=?"
+					"UPDATE ORDERS SET O_MNO=? "
 					+ "WHERE O_MNO=?");
 			pstmt.setInt(1, change_memberNO);
 			pstmt.setInt(2, NEED_memberNO);
@@ -325,7 +325,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS O_PAY=?"
+					"UPDATE ORDERS O_PAY=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, change_PAY);
 			pstmt.setInt(2, change_PAY);
@@ -349,7 +349,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS O_PAY=?"
+					"UPDATE ORDERS O_PAY=? "
 					+ "WHERE O_MNO");
 			pstmt.setInt(1, change_PAY);
 			pstmt.setInt(2, NEED_memberNO);
@@ -410,7 +410,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY"
+					"SELECT O_NO, O_MNO, O_PAY "
 					+ "FROM ORDERS"
 					+ "WHERE O_PAY=?");
 			pstmt.setInt(1, NEED_PAY);
@@ -447,7 +447,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY"
+					"SELECT O_NO, O_MNO, O_PAY "
 					+ "FROM ORDERS"
 					+ "WHERE O_PAY=?");
 			pstmt.setInt(1, NEED_memberNO);
@@ -484,8 +484,8 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_PAY"
-					+ "FROM ORDERS"
+					"SELECT O_PAY "
+					+ "FROM ORDERS "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, NEED_orderNO);
 			
@@ -515,8 +515,8 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO"
-					+ "FROM ORDERS"
+					"SELECT O_NO "
+					+ "FROM ORDERS "
 					+ "O_MNO=?");
 			pstmt.setInt(1, NEED_memberNO);
 			
