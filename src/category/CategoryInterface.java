@@ -14,20 +14,20 @@ public interface CategoryInterface {
 
 	CategoryDTO selectCategory(CategoryDTO category) throws Exception;
 	
-	void deleteCategory(int categoryNO) throws Exception;
+	void deleteCategory(int NEED_categoryNO) throws Exception;
 	
-	void deleteCategory(String categoryNAme) throws Exception;
+	void deleteCategory(String NEED_categoryNAme) throws Exception;
 	
-	void updateCategory(int categoryNO, int change_categoryNO) throws Exception;
+	void updateCategory(int NEED_categoryNO, int change_categoryNO) throws Exception;
 	
-	void updateCategory(int categoryNO, String change_categoryName) throws Exception;
+	void updateCategory(int NEED_categoryNO, String change_categoryName) throws Exception;
 	
-	void updateCategory(String categoryName, int change_categoryNO) throws Exception;
+	void updateCategory(String NEED_categoryName, int change_categoryNO) throws Exception;
 	
-	void updateCategory(String categoryName, String change_categoryName) throws Exception;
+	void updateCategory(String NEED_categoryName, String change_categoryName) throws Exception;
 	
-	CategoryDTO selectCategory(int categoryNO) throws Exception;
+	CategoryDTO selectCategory(int NEED_categoryNO) throws Exception;
 	
-	CategoryDTO selectCategory(String categoryName) throws Exception;
+	CategoryDTO selectCategory(String NEED_categoryName) throws Exception;
 
 }
