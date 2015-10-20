@@ -24,8 +24,8 @@ public class ProductDAO implements ProductInterface{
 	@Override
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
-		Context envCtx = (Context)initCtx.lookup("java:/comp/env");
-		DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
+		Context envCtx  = (Context)initCtx.lookup("java:/comp/env");
+		DataSource ds   = (DataSource)envCtx.lookup("jdbc/orcl");
 		return ds.getConnection();
 	}
 
@@ -38,12 +38,17 @@ public class ProductDAO implements ProductInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERT INTO PRODUCT VALUES ("
-					+ "PRODUCT_SEQ.NEXTVAL,?,?,?,?)");
-			pstmt.setInt(2, product.getP_cno());
-			pstmt.setString(3, product.getP_name());
-			pstmt.setInt(4,product.getP_price());
-			pstmt.setInt(5, product.getP_count());
+					"INSERT INTO PRODUCT"
+					+ "(P_NO, P_CNO, P_NAME, P_PRICE, P_COUNT, P_DESC, P_PATH, P_REGDATE)"
+					+ " VALUES "
+					+ "(PRODUCT_SEQ.NEXTVAL,?,?,?,?,?,?,?)");
+			pstmt.setInt(1, product.getP_cno());
+			pstmt.setString(2, product.getP_name());
+			pstmt.setInt(3,product.getP_price());
+			pstmt.setInt(4, product.getP_count());
+			pstmt.setString(5, product.getP_desc());
+			pstmt.setString(6, product.getP_path());
+			pstmt.setTimestamp(7, product.getP_regdate());
 			
 			pstmt.executeUpdate();
 			
@@ -64,7 +69,7 @@ public class ProductDAO implements ProductInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"DELETE FROM PRODUCT WHERE P_NAME = ?");
+					"DELETE FROM PRODUCT WHERE P_NO=?");
 			pstmt.setString(1, product.getP_name());
 			
 			pstmt.executeUpdate();
@@ -80,19 +85,24 @@ public class ProductDAO implements ProductInterface{
 	@Override
 	public void updateProduct(ProductDTO product) throws Exception {
 		
-		Connection 		  conn = null;
+		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE PRODUCT SET P_CNO=?, P_NAME=?, P_PRICE=?, P_COUNT=?"
+					"UPDATE "
+					+ "PRODUCT "
+					+ "SET P_CNO=?, P_NAME=?, P_PRICE=?, P_COUNT=?, P_DESC, P_PATH, P_REGDATE"
 					+ "WHERE P_NO=?");
 			pstmt.setInt(1, product.getP_cno());
 			pstmt.setString(2, product.getP_name());
 			pstmt.setInt(3, product.getP_price());
 			pstmt.setInt(4, product.getP_count());
-			pstmt.setInt(5, product.getP_no());
+			pstmt.setString(6, product.getP_desc());
+			pstmt.setString(6, product.getP_path());
+			pstmt.setTimestamp(7, product.getP_regdate());
+			pstmt.setInt(8, product.getP_no());
 			
 			pstmt.executeQuery();
 			
@@ -102,7 +112,6 @@ public class ProductDAO implements ProductInterface{
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
-		
 	}
 
 	@Override
@@ -115,10 +124,12 @@ public class ProductDAO implements ProductInterface{
 
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT * FROM PRODUCT WHERE P_NAME = ?");
-			pstmt.setString(1, product.getP_name());
+					"SELECT "
+					+ "P_NO, P_CNO, P_NAME, P_PRICE, P_COUNT, P_DESC, P_PATH, P_REGDATE"
+					+ "FROM PRODUCT WHERE P_NO=?");
+			pstmt.setInt(1, product.getP_no());
 			
 			rs = pstmt.executeQuery();
 			
@@ -129,6 +140,10 @@ public class ProductDAO implements ProductInterface{
 				dto.setP_name(rs.getString(3));
 				dto.setP_price(rs.getInt(4));
 				dto.setP_count(rs.getInt(5));
+				dto.setP_desc(rs.getString(6));
+				dto.setP_path(rs.getString(7));
+				dto.setP_regdate(rs.getTimestamp(8));
+				dto.setP_no(9);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,18 +156,20 @@ public class ProductDAO implements ProductInterface{
 	}
 
 	@Override
-	public void updateCategoryNO(String productName, int categoryNO) throws Exception{
+	public void updateCNO_NO(String NEED_productNO, int change_categoryNO) throws Exception{
 		
-		Connection		  conn = null;
+		Connection		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UODATE PRODUCT SET P_CNO=?"
-					+ "WHERE P_NAME=?");
-			pstmt.setInt(1, categoryNO);
-			pstmt.setString(2, productName);
+					"UODATE "
+					+ "PRODUCT "
+					+ "SET P_CNO=?"
+					+ "WHERE P_NO=?");
+			pstmt.setInt(1, change_categoryNO);
+			pstmt.setString(2, NEED_productNO);
 			
 			pstmt.executeUpdate();
 			
@@ -165,18 +182,20 @@ public class ProductDAO implements ProductInterface{
 	}
 
 	@Override
-	public void updateName(String productName, String Name)  throws Exception{
+	public void updateName_NAME(String NEED_productName, String change_productName)  throws Exception{
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE PRODUCT SET P_NAME=?"
+					"UPDATE "
+					+ "PRODUCT "
+					+ "SET P_NAME=?"
 					+ "WHERE P_NAME=?");
-			pstmt.setString(1, Name);
-			pstmt.setString(2, productName);
+			pstmt.setString(1, change_productName);
+			pstmt.setString(2, NEED_productName);
 			
 			pstmt.executeUpdate();
 			
@@ -189,18 +208,20 @@ public class ProductDAO implements ProductInterface{
 	}
 
 	@Override
-	public void updatePrice(String productName, int price)  throws Exception{
+	public void updatePrice_NO(String NEED_productName, int change_price)  throws Exception{
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE PRODUCT SET P_PRICE=?"
+					"UPDATE "
+					+ "PRODUCT "
+					+ "SET P_PRICE=?"
 					+ "WHERE P_NAME=?");
-			pstmt.setInt(1, price);
-			pstmt.setString(2, productName);
+			pstmt.setInt(1, change_price);
+			pstmt.setString(2, NEED_productName);
 			
 			pstmt.executeUpdate();
 			
@@ -213,18 +234,20 @@ public class ProductDAO implements ProductInterface{
 	}
 
 	@Override
-	public void updateCount(String productName, int count) throws Exception{
+	public void updateCount_NO(String NEED_productName, int change_count) throws Exception{
 		
 		Connection		  conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE PRODUCT SET P_COUNT=?"
+					"UPDATE "
+					+ "PRODUCT "
+					+ "SET P_COUNT=?"
 					+ "WHER P_NAME=?");
-			pstmt.setInt(1, count);
-			pstmt.setString(2, productName);
+			pstmt.setInt(1, change_count);
+			pstmt.setString(2, NEED_productName);
 			
 			pstmt.executeUpdate();
 	

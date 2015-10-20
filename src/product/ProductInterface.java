@@ -14,11 +14,11 @@ public interface ProductInterface {
 
 	ProductDTO selectProduct(ProductDTO product) throws Exception;
 	
-	void updateCategoryNO(String productName,int categoryNO) throws Exception;
+	void updateCNO_NO(String NEED_productNO,int change_categoryNO) throws Exception;
 	
-	void updateName(String productName, String Name) throws Exception;
+	void updateName_NAME(String NEED_productName, String change_productName) throws Exception;
 	
-	void updatePrice(String productName, int price) throws Exception;
+	void updatePrice_NO(String NEED_productName, int change_price) throws Exception;
 	
-	void updateCount(String productName, int count) throws Exception;
+	void updateCount_NO(String NEED_productName, int change_count) throws Exception;
 }
