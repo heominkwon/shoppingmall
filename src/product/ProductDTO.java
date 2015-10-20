@@ -1,11 +1,16 @@
 package product;
 
+import java.sql.Timestamp;
+
 public class ProductDTO {
 	private int p_no;
 	private int p_cno;
 	private String p_name;
 	private int p_price;
 	private int p_count;
+	private String p_desc;
+	private String p_path;
+	private Timestamp p_regdate; 
 	
 	public int getP_no(){
 		return this.p_no;
@@ -21,6 +26,15 @@ public class ProductDTO {
 	}
 	public int getP_count(){
 		return this.p_count;
+	}
+	public String getP_desc(){
+		return this.p_desc;
+	}
+	public String getP_path(){
+		return this.p_path;
+	}
+	public Timestamp getP_regdate(){
+		return this.p_regdate;
 	}
 	
 	public void setP_no(int p_no){
@@ -49,5 +63,14 @@ public class ProductDTO {
 	}
 	public void setP_count(String p_count){
 		this.p_count = Integer.parseInt(p_count);
+	}
+	public void setP_desc(String p_desc){
+		this.p_desc = p_desc;
+	}
+	public void setP_path(String p_path){
+		this.p_path = p_path;
+	}
+	public void setP_regdate(Timestamp p_regdate) {
+		this.p_regdate = p_regdate;
 	}
 }
