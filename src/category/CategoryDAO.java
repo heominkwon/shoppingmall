@@ -136,6 +136,8 @@ public class CategoryDAO implements CategoryInterface{
 		return dto;
 	}
 
+	
+	
 	@Override
 	public void deleteCategory(int NEED_categoryNO) throws Exception {
 		
@@ -180,6 +182,8 @@ public class CategoryDAO implements CategoryInterface{
 		}
 	}
 
+	
+	
 	@Override
 	public void updateCategory(int NEED_categoryNO, int change_categoryNO) throws Exception {
 
@@ -284,6 +288,8 @@ public class CategoryDAO implements CategoryInterface{
 		}
 	}
 
+	
+	
 	@Override
 	public CategoryDTO selectCategory(int NEED_categoryNO) throws Exception {
 		
