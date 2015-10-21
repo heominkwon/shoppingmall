@@ -88,7 +88,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=? "
+					"UPDATE ORDERS O_MNO=?, O_PAY=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, order.getO_mno());
 			pstmt.setInt(2, order.getO_pay());
@@ -253,7 +253,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_N=? "
+					"UPDATE ORDERS SET O_NO=? "
 					+ "WHERE O_MNO=?");
 			pstmt.setInt(1, change_orderNO);
 			pstmt.setInt(2, NEED_memberNO);
@@ -375,8 +375,8 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY"
-					+ "FROM ORDERS"
+					"SELECT O_NO, O_MNO, O_PAY "
+					+ "FROM ORDERS "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, NEED_orderNO);
 			
@@ -411,7 +411,7 @@ public class OrderDAO implements OrderInterface{
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"SELECT O_NO, O_MNO, O_PAY "
-					+ "FROM ORDERS"
+					+ "FROM ORDERS "
 					+ "WHERE O_PAY=?");
 			pstmt.setInt(1, NEED_PAY);
 			
@@ -448,8 +448,8 @@ public class OrderDAO implements OrderInterface{
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"SELECT O_NO, O_MNO, O_PAY "
-					+ "FROM ORDERS"
-					+ "WHERE O_PAY=?");
+					+ "FROM ORDERS "
+					+ "WHERE O_MNO=?");
 			pstmt.setInt(1, NEED_memberNO);
 			
 			rs = pstmt.executeQuery();
