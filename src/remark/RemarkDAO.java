@@ -362,6 +362,7 @@ public class RemarkDAO implements RemarkInterface{
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
+				dto = new RemarkDTO();
 				dto.setR_no(rs.getInt(1));
 				dto.setR_pno(rs.getInt(2));
 				dto.setR_title(rs.getString(3));
