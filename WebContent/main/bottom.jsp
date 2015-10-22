@@ -9,7 +9,7 @@
 <body>
   <hr> 
   <a href="road.jsp" style="text-decoration:none" >찾아오시는 길 </a>|
-  <a href="protect.jsp" style="text-decoration:none">개인보호정책|
+  <a href="protect.jsp" style="text-decoration:none">개인보호정책</a>|
   <a href="help.jsp" style="text-decoration:none">도움말</a>|
   <a href="sitemap.jsp" style="text-decoration:none">사이트맵</a><br/>
 

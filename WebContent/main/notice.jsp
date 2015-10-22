@@ -59,19 +59,19 @@
 	
 		<ul>
 			
-			<li><a class="menuLink" href="template.jsp">HOME</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/template.jsp">HOME</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="intro.jsp">회사소개</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/intro.jsp">회사소개</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="notice.jsp">공지사항</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/notice.jsp">공지사항</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="category.jsp">카테고리</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/category.jsp">카테고리</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="order.jsp">주문배송</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/order.jsp">주문배송</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="QnA.jsp">QnA</a></li>
+			<li><a class="menuLink" href="/jsp/qnaboard/list1.jsp">QnA</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="customerCenter.jsp">고객센터</a></li>
+			<li><a class="menuLink" href="/jsp/shoppingmall/customerCenter.jsp">고객센터</a></li>
 		</ul>
 	</nav>
     </td>
@@ -114,19 +114,19 @@ function checkIt()
 <body onLoad="focusIt();" >
 <td align="left">   
        <form name="inform" method="post" action="loginPro.jsp"  onSubmit="return checkIt();">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 :&nbsp;<input type="text" name="M_ID" size="15" maxlength="10">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디:&nbsp;<input type="text" name="M_ID" size="15" maxlength="10">
                    &nbsp;패스워드: &nbsp;<input type="password" name="M_PW" size="15" maxlength="12">
               
             <input type="submit" name="Submit" value="로그인">
             <input type="button"  value="회원가입" 
-            onclick="javascript:window.location='inputForm.jsp'">
+            onclick="javascript:window.location='/jsp/join/inputForm.jsp'">
        </form></td>
      <%}else{%>
              <td align="left">
-             <%=session.getAttribute("memId")%>님이 방문하셨습니다
-             	<form  method="post" action="logout.jsp">
-             	 <input type="submit"  value="로그아웃" >
-           		 <input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=session.getAttribute("memId")%>님이 방문하셨습니다
+             	<form  method="post" action="/jsp/join/logout.jsp">
+             	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  value="로그아웃" >
+           		 <input type="button" value="회원정보변경" onclick="javascript:window.location='/jsp/join/modify.jsp'">
 				</form></td><br>
  <%}
  }catch(NullPointerException e){}

@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<a href ="main.jsp">
-<img src="C:\Users\user1\Desktop\img\logo1.png" width="120" height="150" border=0></a>
+<a href ="/jsp/shoppingmall/template.jsp">
+<img src="/jsp/img/logo1.png" width="120" height="150" border=0></a>
 
 </body>
 </html>
