@@ -11,8 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.sun.corba.se.impl.orb.PrefixParserAction;
-
 public class OrderDAO implements OrderInterface{
 
 	private OrderDAO() {}

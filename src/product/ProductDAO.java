@@ -3,14 +3,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import oracle.jdbc.proxy.annotation.Pre;
-
 
 public class ProductDAO implements ProductInterface{
 	
@@ -767,6 +765,7 @@ public class ProductDAO implements ProductInterface{
 			pstmt.setInt(1, NEED_categoryNO);
 			
 			rs = pstmt.executeQuery();
+			dtolist = new ArrayList<ProductDTO>();
 			
 			while (rs.next()) {
 				ProductDTO dto = new ProductDTO();
