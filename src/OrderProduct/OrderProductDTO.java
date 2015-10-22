@@ -1,6 +1,6 @@
-package order_product;
+package OrderProduct;
 
-public class Order_ProductDTO {
+public class OrderProductDTO {
 
 	private int op_no;
 	private int op_ono;
