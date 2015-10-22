@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer.ConditionObject;
 import java.sql.ResultSet;
 
 import javax.naming.Context;
