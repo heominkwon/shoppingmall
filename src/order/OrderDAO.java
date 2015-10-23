@@ -11,8 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.sun.corba.se.impl.orb.PrefixParserAction;
-
 public class OrderDAO implements OrderInterface{
 
 	private OrderDAO() {}
@@ -41,11 +39,13 @@ public class OrderDAO implements OrderInterface{
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"INSERT INTO ORDERS "
-					+ "(O_NO, O_MNO, O_PAY) "
+					+ "(O_NO, O_MNO, O_PAY, O_ADDRESS, O_DATE) "
 					+ "VALUES "
-					+ "(ORDER_SEQ.NEXTVAL, ?, ?)");
+					+ "(ORDER_SEQ.NEXTVAL,?,?,?,?)");
 			pstmt.setInt(1, order.getO_mno());
 			pstmt.setInt(2, order.getO_pay());
+			pstmt.setString(3, order.getO_address());
+			pstmt.setDate(4, order.getO_date());
 			
 			pstmt.executeUpdate();
 			
@@ -88,11 +88,13 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=? "
+					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=?, O_ADDRESS=?, O_DATE=? "
 					+ "WHERE O_NO=?");
 			pstmt.setInt(1, order.getO_mno());
 			pstmt.setInt(2, order.getO_pay());
-			pstmt.setInt(3, order.getO_no());
+			pstmt.setString(3, order.getO_address());
+			pstmt.setDate(4, order.getO_date());
+			pstmt.setInt(5, order.getO_no());
 			
 			pstmt.executeUpdate();
 			
@@ -116,7 +118,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY "
+					"SELECT O_NO, O_MNO, O_PAY, O_ADDRESS, O_DATE "
 					+ "FROM ORDERS "
 					+ "WHERE "
 					+ "O_NO=?");
@@ -129,6 +131,8 @@ public class OrderDAO implements OrderInterface{
 				dto.setO_no(rs.getInt(1));
 				dto.setO_mno(rs.getInt(2));
 				dto.setO_pay(rs.getInt(3));
+				dto.setO_address(rs.getString(4));
+				dto.setO_date(rs.getDate(5));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,7 +156,7 @@ public class OrderDAO implements OrderInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY"
+					"SELECT O_NO, O_MNO, O_PAY, O_ADDRESS, O_DATE "
 					+ "FROM ORDERS");
 			
 			rs = pstmt.executeQuery();
@@ -163,6 +167,8 @@ public class OrderDAO implements OrderInterface{
 				dto.setO_no(rs.getInt(1));
 				dto.setO_mno(rs.getInt(2));
 				dto.setO_pay(rs.getInt(3));
+				dto.setO_address(rs.getString(4));
+				dto.setO_date(rs.getDate(5));
 				dtoList.add(dto);
 			}
 			
