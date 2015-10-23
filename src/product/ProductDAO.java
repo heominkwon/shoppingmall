@@ -8,9 +8,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import oracle.jdbc.proxy.annotation.Pre;
-
-
 public class ProductDAO implements ProductInterface{
 	
 	private ProductDAO() {}

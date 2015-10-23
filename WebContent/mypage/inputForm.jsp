@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import = "java.util.List" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
-<% request.setCharacterEncoding("euc-kr"); %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -81,7 +78,7 @@
 
 	</tr>
 	
-	<tr border="1">
+	<tr>
 	 <%
 //------------------------------------------영욱이형 변경 내용----------------------------------
  try{
@@ -127,7 +124,7 @@ function checkIt()
              <%=session.getAttribute("memId")%>님이 방문하셨습니다
              	<form  method="post" action="logout.jsp">
              	 <input type="submit"  value="로그아웃" >
-           		 
+           		 <input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
 				</form></td><br>
  <%}
  }catch(NullPointerException e){}
@@ -137,69 +134,125 @@ function checkIt()
 	
 	 <tr>
 	
-		 <td height="700" colspan="2" align="center">
+		<td height="700" colspan="2" align="center">
+			
 			
 			<script language="JavaScript">
-<!--
-if (document.getElementById){
-    document.write('<style type="text/css">\n')
-    document.write('.submenu{display: none;}\n')
-    document.write('</style>\n')
-}
-
-function SwitchMenu(obj){
-    if(document.getElementById){
-    var el = document.getElementById(obj);
-    var ar = document.getElementById("maindiv").getElementsByTagName("span"); 
-        if(el.style.display != "block"){
-            for (var i=0; i<ar.length; i++){
-                if (ar[i].className=="submenu") 
-                ar[i].style.display = "none";
-            }
-            el.style.display = "block";
-        }else{
-            el.style.display = "none";
+	function checkIt() {
+		var userinput = eval("document.userinput");
+		if(!userinput.name.value) {
+            alert("사용자 이름을 입력하세요");
+            return false;
         }
-    }
-}
-//-->
+		if(!userinput.id.value) {
+            alert("ID를 입력하세요");
+            return false;
+        }
+		if(!userinput.passwd.value ) {
+            alert("비밀번호를 입력하세요");
+            return false;
+        }
+		if(userinput.passwd.value != userinput.passwd2.value)	{
+			alert("비밀번호를 동일하게 입력하세요.");
+			return false;
+		}
+		if(!userinput.birth.value) {
+			alert("생년월일을 입력해주세요.");
+			return false;
+		}
+		if(!userinput.address.value){
+			alert("주소를 입력해주세요.");
+			return false;
+		}
+		if(!userinput.phone.value){
+			alert("전화번호를 입력해주세요.");
+			return false;
+		}
+	}
+	
+	function openConfirmid(userinput){
+		
+		if(userinput.id.value == ""){
+			alert("아이디를 입력하세요.");
+			return;
+		}
+		url="confirmId.jsp?id=" + userinput.id.value;
+		open(url,"confirm","toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, width=300,height=200");
+	}
 </script>
 
-<style type="text/css">
-a{text-decoration:none;font-weight:bold:color:#ffffff:}
-#maindiv{float:left; margin:30px; width:150px; height:500px; background-color:#66CCFF; text-align:center;}
 
-</style>
-<body>
-
-<div id="maindiv">
-<p> <div onClick="SwitchMenu('sub1')" onmouseover="this.style.cursor='hand'"><B><font color="white">주문/배송</font></B></div>
-    <span class="submenu" id="sub1">
-        - <a href="new_order.jsp" target="ppp"><font color="white">주문내역/배송현황</font></a><br/><br/>     
-        - <a href="cancel_order.jsp" target="ppp"><font color="white">주문취소/교환/반품</font></a><br/><br/> 
-        - <a href="change_order.jsp" target="ppp"><font color="white">배송지/주문내용변경</font></a><br/><br/>      
-    </span>
-<p> <div onClick="SwitchMenu('sub2')" onmouseover="this.style.cursor='hand'"><font color="white"><B>서비스정보</font></B></div>
-    <span class="submenu" id="sub2">
-        - <a href="event.jsp" target="ppp"><font color="white">이벤트</font></a><br>        
-       
-    </span>
-
-<p> <div onClick="SwitchMenu('sub3')" onmouseover="this.style.cursor='hand'"><B><font color="white">나의정보</font></B></div>
-    <span class="submenu" id="sub3">
-        - <a href="modifyForm.jsp" target="ppp"><font color="white">회원정보관리</font></a><br/><br/>
-        - <a href="deleteForm.jsp" target="ppp"><font color="white">회원탈퇴</font></a><br/><br/>
-      
-    </span>
-</div>
-
- 	<div>
-	<iframe src="result.jsp" width="700" height="800" name="ppp" frameborder="0" ></iframe>
-	</div> 
-				
-</td>
+<form method="post" action="inputPro.jsp" name="userinput" onSubmit="return checkIt()">
+	<table width="450" height="100" border="1" align="center" cellpadding="10">
+		<tr>
+			<td colspan="2" align="center">
+				회원가입
+			</td>
+		</tr>
+		<tr>
+			<td>이름 입력</td>
+			<td align="left">
+				<input type="text" name="name" maxlength="10">
+			</td>
+		</tr>
+		<tr>
+			<td>아이디</td>
+			<td align="left">
+				<input type="text" name="id" maxlength="10">
+				<input type="button" name="confirm_id" value="아이디 중복확인" OnClick="openConfirmid(this.form)">
+			</td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td align="left">
+				<input type="password" name="passwd" maxlength="12">
+			</td>
+		</tr>
+		<tr>
+			<td>비밀번호 확인</td>
+			<td align="left">
+				<input type="password" name="passwd2" maxlength="12">
+			</td>
+		</tr>
+		<tr>
+			<td>생년월일</td>
+			<td align="left">
+				<input type="text" name="birth" maxlength="8">
+			</td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td align="left">
+				<input type="text" name="address" maxlength="50">
+			</td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td align="left">
+				<input type="text" name="phone" maxlength="13">
+			</td>
+		</tr>
+		<tr>
+			<td>이메일</td>
+			<td align="left">
+				<input type="text" name="email" maxlength="30">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" >
+				<input type="submit" name="confirm" value="가입신청">
+				<input type="button" value="가입취소" OnClick="javascript:window.loaction='main.jsp'">
+			</td>
+		</tr>	
+	
+	
+	
+	</table>
+			
+			
+		</td>
 		
-</tr>
+	</tr>
 	
 	<tr>
 		<td height="50" colspan="2" align="center">
