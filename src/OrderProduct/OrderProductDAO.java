@@ -38,15 +38,14 @@ public class OrderProductDAO implements OrderProductInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"INSERTO INTO ORDER_PRODUCT "
+					"INSERT INTO ORDER_PRODUCT "
 					+ "(OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE) "
 					+ "VALUES "
 					+ "(ORDER_PRODUCT_SEQ.NEXTVAL,?,?,?,?)");
-			pstmt.setInt(1, orderproduct.getOP_no());
-			pstmt.setInt(2, orderproduct.getOP_ono());
-			pstmt.setInt(3, orderproduct.getOP_pno());
-			pstmt.setInt(4, orderproduct.getOP_count());
-			pstmt.setInt(5, orderproduct.getOP_price());
+			pstmt.setInt(1, orderproduct.getOP_ono());
+			pstmt.setInt(2, orderproduct.getOP_pno());
+			pstmt.setInt(3, orderproduct.getOP_count());
+			pstmt.setInt(4, orderproduct.getOP_price());
 			
 			pstmt.executeUpdate();
 			
@@ -160,7 +159,7 @@ public class OrderProductDAO implements OrderProductInterface{
 			pstmt = conn.prepareStatement(
 					"SELECT "
 					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
-					+ "FROM ORDER_PRICE ");
+					+ "FROM ORDER_PRODUCT ");
 			
 			rs = pstmt.executeQuery();
 			dtolist = new ArrayList<OrderProductDTO>();

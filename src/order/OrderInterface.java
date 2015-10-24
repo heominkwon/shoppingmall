@@ -42,4 +42,6 @@ public interface OrderInterface {
 	int IsPaid(int NEED_orderNO) throws Exception;
 	
 	List<Integer> selectsOrder_NO (int NEED_memberNO) throws Exception;
+	
+	List<Integer> selectsOrder_NO() throws Exception;
 }
