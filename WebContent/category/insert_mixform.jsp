@@ -39,22 +39,10 @@
 			</tr>
 			<tr>
 				<td rowspan="2" >PRODUCT</td>
-				<td>OP_ONO</td>
 				<td>OP_PNO</td>
 				<td>OP_COUNT</td>
 			</tr>
 			<tr>
-				<td>
-					<select name="OP_ONO">
-					<%
-						for (int i=0; i<orderlistCount; i++) {
-					%>
-						<option value="<%=orderNoList.get(i)%>"><%=orderNoList.get(i) %></option>
-					<%
-						}
-					%>
-					</select>
-				</td>
 				<td>
 					<select name="OP_PNO">
 					<%

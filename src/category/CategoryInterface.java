@@ -1,6 +1,7 @@
 package category;
 
 import java.sql.Connection;
+import java.util.List;
 
 public interface CategoryInterface {
 
@@ -29,5 +30,7 @@ public interface CategoryInterface {
 	CategoryDTO selectCategory(int NEED_categoryNO) throws Exception;
 	
 	CategoryDTO selectCategory(String NEED_categoryName) throws Exception;
+	
+	List<Integer> selectsCategoryNO() throws Exception;
 
 }

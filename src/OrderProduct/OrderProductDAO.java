@@ -29,29 +29,41 @@ public class OrderProductDAO implements OrderProductInterface{
 		return ds.getConnection();
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void insertOrderProduct(OrderProductDTO orderproduct) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
+		int orderNo = -1;
 		try {
 			conn  = getConnection();
+/*			pstmt = conn.prepareStatement("SELECT "
+					+ "LAST_NUMBER "
+					+ "FROM USER_SEQUENCES "
+					+ "WHERE SEQUENCE_NAME = UPPER('ORDER_SEQ')");
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				orderNo = rs.getInt(1);
+			}
+			*/
 			pstmt = conn.prepareStatement(
 					"INSERT INTO ORDER_PRODUCT "
 					+ "(OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE) "
 					+ "VALUES "
-					+ "(ORDER_PRODUCT_SEQ.NEXTVAL,?,?,?,?)");
-			pstmt.setInt(1, orderproduct.getOP_ono());
-			pstmt.setInt(2, orderproduct.getOP_pno());
-			pstmt.setInt(3, orderproduct.getOP_count());
-			pstmt.setInt(4, orderproduct.getOP_price());
+					+ "(ORDER_PRODUCT_SEQ.NEXTVAL,ORDER_SEQ.CURRVAL,?,?,?)");
+			pstmt.setInt(1, orderproduct.getOP_pno());
+			pstmt.setInt(2, orderproduct.getOP_count());
+			pstmt.setInt(3, orderproduct.getOP_price());
 			
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}

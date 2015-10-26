@@ -15,6 +15,13 @@ public class OrderProductDTO {
 		this.op_count = op_count;
 		this.op_price = op_price;
 	}
+	public OrderProductDTO (int op_pno, int op_count, int op_price) {
+		this.op_no = 0;
+		this.op_ono = 0;
+		this.op_pno = op_pno;
+		this.op_count = op_count;
+		this.op_price = op_price;
+	}
 	public OrderProductDTO () {
 		
 	}

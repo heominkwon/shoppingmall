@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -356,5 +358,37 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null) try {pstmt.close();} catch (SQLException se) {}
 		}
 		return dto;
+	}
+
+	@Override
+	public List<Integer> selectsCategoryNO() throws Exception {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Integer> categoryNoList = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "C_NO "
+					+ "FROM "
+					+ "CATEGORY");
+			rs = pstmt.executeQuery();
+			categoryNoList = new ArrayList<Integer>();
+			
+			while (rs.next()) {
+				categoryNoList.add(rs.getInt("C_NO"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) try {rs.close();} catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn != null) try {conn.close();} catch (SQLException se) {}
+		}
+		return categoryNoList;
 	}
 }

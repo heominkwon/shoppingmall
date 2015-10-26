@@ -8,6 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%
+
 	OrderDAO OrderManager = OrderDAO.getInstance();
 	List<OrderDTO> orderList = OrderManager.selectsOrder();
 	int orderlistCount = orderList.size();
@@ -25,6 +26,8 @@
 	<a href="top.jsp">top</a>
 	<a href="inner.jsp">inner</a>
 	<p/>
+	<a href="insert_productform.jsp">INSERT PRODUCT</a>
+	<p />
 	<a href="insert_orderform.jsp">INSERT ORDER</a>
 	<p />
 	<a href="insert_orderproductform.jsp">INSERT ORDER_PRODUCT</a>
