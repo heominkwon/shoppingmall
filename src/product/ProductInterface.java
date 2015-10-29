@@ -76,9 +76,21 @@ public interface ProductInterface {
 	
 	
 	
+	
+	
+	int getProductCount() throws Exception;
+	
+	List getProducts(int start, int end) throws Exception;
+	
+	ProductDTO getProduct(int num) throws Exception;
+	
 	List<ProductDTO> selectsProduct_CNO(int NEED_categoryNO) throws Exception;
 	
 	List<Integer> selectsProduct_NO() throws Exception;
 	
 	Integer selectPrice_nNO(Integer need_no) throws Exception;
+	
+	int getProductCountByCategory(int c_no) throws Exception;
+
+	List getProductsByCategory(int c_no, int start, int end) throws Exception;
 }
