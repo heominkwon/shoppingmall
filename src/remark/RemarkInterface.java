@@ -1,6 +1,7 @@
 package remark;
 
 import java.sql.Connection;
+import java.util.List;
 public interface RemarkInterface {
 	
 	Connection getConnection() throws Exception; 
