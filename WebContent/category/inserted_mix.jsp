@@ -5,7 +5,7 @@
 <%@page import="product.ProductDAO"%>
 <%@page import="OrderProduct.OrderProductDTO"%>
 <%@page import="OrderProduct.OrderProductDAO"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset="EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>

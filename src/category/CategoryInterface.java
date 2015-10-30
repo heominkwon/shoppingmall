@@ -8,29 +8,22 @@ public interface CategoryInterface {
 	Connection getConnection() throws Exception;
 
 	void insertCategory(CategoryDTO category) throws Exception;
-
 	void deleteCategory(CategoryDTO category) throws Exception;
-	
 	void updateCategory(CategoryDTO category) throws Exception;
 
 	CategoryDTO selectCategory(CategoryDTO category) throws Exception;
 	
-	void deleteCategory(int NEED_categoryNO) throws Exception;
+	void deleteCategory(int c_no) throws Exception;
+	void deleteCategory(String c_name) throws Exception;
 	
-	void deleteCategory(String NEED_categoryNAme) throws Exception;
+	void updateCategory(int c_no, int updateC_no) throws Exception;
+	void updateCategory(int c_no, String updateC_name) throws Exception;
+	void updateCategory(String c_name, int updateC_no) throws Exception;
+	void updateCategory(String c_name, String updateC_name) throws Exception;
 	
-	void updateCategory(int NEED_categoryNO, int change_categoryNO) throws Exception;
+	CategoryDTO selectCategory(int c_no) throws Exception;
+	CategoryDTO selectCategory(String c_name) throws Exception;
 	
-	void updateCategory(int NEED_categoryNO, String change_categoryName) throws Exception;
-	
-	void updateCategory(String NEED_categoryName, int change_categoryNO) throws Exception;
-	
-	void updateCategory(String NEED_categoryName, String change_categoryName) throws Exception;
-	
-	CategoryDTO selectCategory(int NEED_categoryNO) throws Exception;
-	
-	CategoryDTO selectCategory(String NEED_categoryName) throws Exception;
-	
-	List<Integer> selectsCategoryNO() throws Exception;
+	List<Integer> selectAllC_no() throws Exception;
 
 }
