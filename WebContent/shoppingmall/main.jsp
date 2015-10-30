@@ -8,7 +8,7 @@
 <title>main page</title>
 </head>
 <body>
-	<jsp:include page="template.jsp"/>
+	<jsp:include page="/shoppingmall/template.jsp"/>
 </body>
 </html>
 

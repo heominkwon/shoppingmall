@@ -1,45 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<<<<<<< HEAD
-=======
 
-<%@ page import = "java.util.List" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
-<% request.setCharacterEncoding("euc-kr"); %>
 
->>>>>>> origin/master
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<<<<<<< HEAD
-<title></title>
-</head>
-<body>
-	<table border="0" width="1500" align="center">
-	<tr>
-		<td height="100" align="center" colspan="2">
-				<jsp:include page = "/shoppingmall/mainTop.jsp" />
-		</td>
-	</tr>
-	<tr>
-			<td valign="top">
- 				<jsp:include page="index.jsp" flush="false" />
-	
-			</td>
-		<td>
-				<jsp:include page = "/shoppingmall/mainpage.jsp" />
-		</td>
-	</tr>
-	<tr>
-			<td height="50" colspan="2" align="center">
-				<jsp:include page="/shoppingmall/bottom.jsp"/>		
-			</td>
-	</tr>
-	</table>
-</body>
-</html>
-=======
 <title>shop</title>
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -48,7 +15,7 @@
 </head>
 
 <body>
-<table width="1000" height="1" border="1" align="center">
+<table width="1000" height="1" border="0" align="center">
 	<tr>
 		<td height="100" align="center" colspan="2">
 			<jsp:include page="/shoppingmall/top.jsp"/>
@@ -104,7 +71,7 @@
 			<li>|</li>
 			<li><a class="menuLink" href="/jsp/qnaboard/list1.jsp">QnA</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="/jsp/shoppingmall/customerCenter.jsp">고객센터</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\event.jsp">이벤트</a></li>
 		</ul>
 	</nav>
     </td>
@@ -113,7 +80,7 @@
 
 	</tr>
 	
-	<tr border="1">
+	<tr>
 	 <%
 //------------------------------------------영욱이형 변경 내용----------------------------------
  try{
@@ -146,20 +113,27 @@ function checkIt()
 
 <body onLoad="focusIt();" >
 <td align="left">   
-       <form name="inform" method="post" action="loginPro.jsp"  onSubmit="return checkIt();">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디 :&nbsp;<input type="text" name="M_ID" size="15" maxlength="10">
+       <form name="inform" method="post" action="/jsp/join/loginPro.jsp"  onSubmit="return checkIt();">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디:&nbsp;<input type="text" name="M_ID" size="15" maxlength="10">
                    &nbsp;패스워드: &nbsp;<input type="password" name="M_PW" size="15" maxlength="12">
               
             <input type="submit" name="Submit" value="로그인">
             <input type="button"  value="회원가입" 
-            onclick="javascript:window.location='inputForm.jsp'">
+            onclick="javascript:window.location='/jsp/join/inputForm.jsp'">
        </form></td>
      <%}else{%>
              <td align="left">
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=session.getAttribute("memId")%>님이 방문하셨습니다
-             	<form  method="post" action="logout.jsp">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=session.getAttribute("memId")%>님이 방문하셨습니다
+             	<form  method="post" action="/jsp/join/logout.jsp">
              	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  value="로그아웃" >
-           		 <input type="button" value="회원정보변경" onclick="javascript:window.location='modifyForm.jsp'">
+           		 <input type="button" value="회원정보변경" onclick="javascript:window.location='/jsp/join/modifyForm.jsp'">
+			
+			 <%if(session.getAttribute("memId").equals("admin")){%>
+	             	    <input type="button" value="관리자페이지" onclick="javascript:window.location='/jsp/admin/admain.jsp'">
+	             	  
+	             	 <%}else{ %>
+	           		  <input type="button" value="마이페이지" onclick="javascript:window.location='/jsp/join/mypage.jsp'">
+	           		 <%} %>
 				</form></td><br>
  <%}
  }catch(NullPointerException e){}
@@ -169,65 +143,42 @@ function checkIt()
 	
 	 <tr>
 	
-		 <td height="700" colspan="2" align="left" valign="top">
+	
+		<td width="700" height="700" colspan="2" align="center" valign="top">
+		<br /><br /><br /><br /><br />
+			<h2>개인정보 보호정책</h2>
 			
-	
-<html lang=''>
-<head>
-   <meta charset='utf-8'>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="styles.css">
-   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-   <script src="script.js"></script>
-  
-</head>
-<body>
+  <table border="0">
+ <tr>
+ 	<td >
+ 
+ <div style="overflow:auto; width:500px; height:200px; border-style:solid; border-color:#EBEBEB;">
+ 
+ 
+ ㈜지오다노(이하'회사')는 회원 개개인의 프라이버시를 
+ 적극적이고 효과적으로 보호하며 
+'정보통신망이용촉진 및 정보보호 등에 관한법률' 
+등 모든 관련법규를 준수하기 위하여
+회원 개인정보취급(처리)방침]을 제정하고 이를 준수하고 있습니다.
+회원 가입시 그리고 사이트 방문시에 수시로 확인하여 주시기 바랍니다.<br /><br />
 
-<div id='cssmenu' onmouseover="this.style.cursor='hand'"><br /><br /><br />
-<ul>
-   <li><a href='/jsp/shoppingmall/template.jsp'><span>HOME</span></a></li>
-   
-   <li class='active has-sub'><a href='#'><span>주문배송</span></a>  
-      <ul>
-         <li class='has-sub'><a href='#'><span>주문내역/배송현황</span></a></li>
-         <li class='has-sub'><a href='#'><span>주문취소/교환/반품</span></a></li>
-          <li class='has-sub'><a href='#'><span>주문내용변경</span></a></li>               
-      </ul>
-   </li>
-   
-  
-   <li class='active has-sub'><a href='#'><span>서비스정보</span></a>
-   
-    <ul>
-    <li class='has-sub'><a href='#'><span>이벤트</span></a></li>
-    </ul>
-    </li>
-    
-   
-   <li class='active has-sub'><a href='#'><span>나의정보</span></a>
-   
-    <ul>
-    <li class='has-sub'><a href='#'><span>회원정보변경</span></a></li>
-     <li class='has-sub'><a href='#'><span>회원탈퇴</span></a></li>
-    </ul>
-    </li>
-</ul>
-</div>
+회원 개인정보취급(처리)방침 은 관련 법률 및 지침의 변경과
+'회사' 내부 운영방침의 변경에 따라 변경될 수 있습니다.
+회원 개인정보취급(처리)방침] 이 변경될 경우 ㈜지오다노
+ 사이트 서비스 사이트에 게시됩니다.<br /><br />
+변경사항에 의문이 있으실 경우는 언제라도 담당자에게 문의하시거나
+회사 사이트 및 서비스 사이트를 방문하여 확인하실 수 있습니다. 
 
-<!-- <div>
-	<iframe src="result.jsp" width="800" height="600" name="ppp" frameborder="0" align="left"></iframe>
-	</div> 	 -->
+</div> 
+ 	</td>
+ 
+ </tr>
+</table>
+			
 				
+		</td>
 		
-		
-</td>
-
-</tr>
-	
-	
-		
-	
+	</tr>
 	
 	<tr>
 		<td height="50" colspan="2" align="center">
@@ -242,5 +193,3 @@ function checkIt()
 
    
     
-    
->>>>>>> origin/master

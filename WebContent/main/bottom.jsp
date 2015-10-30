@@ -7,29 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD
-<center>
-=======
->>>>>>> origin/master
   <hr> 
   <a href="road.jsp" style="text-decoration:none" >찾아오시는 길 </a>|
   <a href="protect.jsp" style="text-decoration:none">개인보호정책</a>|
   <a href="help.jsp" style="text-decoration:none">도움말</a>|
-  <a href="sitemap.jsp" style="text-decoration:none">사이트맵</a><br/><br/>
-  
- 	서울특별시 강남구 역삼동 KH 정보교육원<br />
-  
-  
-  
-  
-  
-  <font color="#4B4B4B" size="3">Copyrightⓒ th.Jung ALL RIGHT RESERVED </font>
+  <a href="sitemap.jsp" style="text-decoration:none">사이트맵</a><br/>
 
+<font size="2">본 웹 사이트는 이메일주소가 무단으로 수집되는 것을 거부합니다.</font>
 
-<<<<<<< HEAD
-</center>
-=======
-
->>>>>>> origin/master
 </body>
 </html>
