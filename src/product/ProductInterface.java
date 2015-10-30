@@ -77,4 +77,8 @@ public interface ProductInterface {
 	
 	
 	List<ProductDTO> selectsProduct_CNO(int NEED_categoryNO) throws Exception;
+	
+	List<Integer> selectsProduct_NO() throws Exception;
+	
+	Integer selectPrice_nNO(Integer need_no) throws Exception;
 }

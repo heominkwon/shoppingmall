@@ -1,5 +1,9 @@
-<%@page import="OrderProduct.OrderProductDTO"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.sql.Date"%>
+<%@page import="order.OrderDTO"%>
+<%@page import="order.OrderDAO"%>
 <%@page import="product.ProductDAO"%>
+<%@page import="OrderProduct.OrderProductDTO"%>
 <%@page import="OrderProduct.OrderProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
@@ -8,8 +12,15 @@
 <%
 	
 	request.setCharacterEncoding("euc-kr");
+
 	OrderProductDAO orderproductManager = OrderProductDAO.getInstace();
 	ProductDAO productManager = ProductDAO.getInstance();
+	OrderDAO orderManager = OrderDAO.getInstance();
+	
+	String O_MNO = request.getParameter("O_MNO");
+	String O_PAY = request.getParameter("O_PAY");
+	String O_ADDRESS = request.getParameter("O_ADDRESS");
+	Date   O_DATE    = new Date(System.currentTimeMillis());
 	
 	int OP_ONO = Integer.parseInt(request.getParameter("OP_ONO"));
 	int OP_PNO = Integer.parseInt(request.getParameter("OP_PNO"));
@@ -17,22 +28,17 @@
 	int P_PRICE = productManager.selectPrice_nNO(OP_PNO);
 	int OP_PRICE = OP_COUNT * P_PRICE;
 	
-	System.out.println("OP_ONO"+OP_ONO);
-	System.out.println(OP_PNO);
-	System.out.println(OP_COUNT);
-	System.out.println(P_PRICE);
-	System.out.println(OP_PRICE);
+	OrderDTO order = new OrderDTO(O_MNO, O_PAY, O_ADDRESS, O_DATE);
+	OrderProductDTO order_product = new OrderProductDTO(OP_ONO, OP_PNO, OP_COUNT, OP_PRICE);
 	
-	OrderProductDTO dto = new OrderProductDTO(OP_ONO, OP_PNO, OP_COUNT, OP_PRICE);
-	
-	orderproductManager.insertOrderProduct(dto);
+	orderManager.insertOrder(order);
+	orderproductManager.insertOrderProduct(order_product);
 	
 	response.sendRedirect("order.jsp");
-	
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title></title>
+<title>Insert title here</title>
 </head>
 <body>
 

@@ -16,8 +16,15 @@
 			</tr>
 			<tr>
 				<td>O_PAY</td>
-				<td><input type="radio" name="O_PAY" value="1">TRUE</td>
-				<td><input type="radio" name="O_PAY" value="2">FALSE</td>
+				<Td>
+					<select name="O_PAY">
+						<option value="0">주문대기 </option>
+						<option value="1">주문취소 </option>
+						<option value="2">주문확인 </option>
+						<option value="3">환불</option>
+						<option value="4">구매확정</option>
+					</select>
+				</Td>
 			</tr>
 			<tr>
 				<td>O_ADRESS</td>

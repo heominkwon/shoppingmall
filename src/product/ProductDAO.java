@@ -706,7 +706,6 @@ public class ProductDAO implements ProductInterface{
 		return dto;
 	}
 	
-
 	@Override
 	public ProductDTO selectProduct(String NEED_productNAME) throws Exception {
 		
@@ -747,6 +746,8 @@ public class ProductDAO implements ProductInterface{
 		return dto;
 	}
 
+	
+	
 	@Override
 	public List<ProductDTO> selectsProduct_CNO(int NEED_categoryNO) throws Exception {
 		
@@ -769,14 +770,14 @@ public class ProductDAO implements ProductInterface{
 			
 			while (rs.next()) {
 				ProductDTO dto = new ProductDTO();
-				dto.setP_no(rs.getInt(1));
-				dto.setP_cno(rs.getInt(2));
-				dto.setP_name(rs.getString(3));
-				dto.setP_price(rs.getInt(4));
-				dto.setP_count(rs.getInt(5));
-				dto.setP_desc(rs.getString(6));
-				dto.setP_path(rs.getString(7));
-				dto.setP_regdate(rs.getTimestamp(8));
+				dto.setP_no(rs.getInt("P_NO"));
+				dto.setP_cno(rs.getInt("P_CNO"));
+				dto.setP_name(rs.getString("P_NAME"));
+				dto.setP_price(rs.getInt("P_PRICE"));
+				dto.setP_count(rs.getInt("P_COUNT"));
+				dto.setP_desc(rs.getString("P_DESC"));
+				dto.setP_path(rs.getString("P_PATH"));
+				dto.setP_regdate(rs.getTimestamp("P_REGDATE"));
 				dtolist.add(dto);
 			}
 		} catch (Exception e){
@@ -787,5 +788,72 @@ public class ProductDAO implements ProductInterface{
 			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
 		}
 		return dtolist;
+	}
+
+	@Override
+	public List<Integer> selectsProduct_NO() throws Exception {
+		
+		Connection 			conn 		  = null;
+		PreparedStatement   pstmt 		  = null;
+		ResultSet 			rs 			  = null;
+		List<Integer> 		productNoList = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT P_NO "
+					+ "FROM PRODUCT");
+			
+			rs = pstmt.executeQuery();
+			productNoList = new ArrayList<Integer>();
+			
+			while (rs.next()) {
+				Integer productNo = new Integer(rs.getInt(1));
+				productNoList.add(productNo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return productNoList;
+	}
+	
+	
+	
+
+	@Override
+	public Integer selectPrice_nNO(Integer need_no) throws Exception {
+			
+		Connection		  conn 		= null;
+		PreparedStatement pstmt 	= null;
+		ResultSet		  rs 		= null;
+		Integer			  p_price 	= null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT P_PRICE "
+					+ "FROM PRODUCT "
+					+ "WHERE P_NO=?");
+			pstmt.setInt(1, need_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				p_price = new Integer(rs.getInt(1));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}	catch (SQLException se) {}
+		}
+		return p_price;
 	}
 }

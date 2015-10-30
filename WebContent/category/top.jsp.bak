@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<a href="order.jsp">ordertest</a>
+	<a href="order.jsp">order test</a>
 	<a href="bottom.jsp">bottom</a>
 	<a href="inner.jsp">inner</a>
 	<%

@@ -11,6 +11,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
+
 public class OrderDAO implements OrderInterface{
 
 	private OrderDAO() {}
@@ -523,7 +525,7 @@ public class OrderDAO implements OrderInterface{
 			pstmt = conn.prepareStatement(
 					"SELECT O_NO "
 					+ "FROM ORDERS "
-					+ "O_MNO=?");
+					+ "WHERE O_MNO=?");
 			pstmt.setInt(1, NEED_memberNO);
 			
 			rs = pstmt.executeQuery();
@@ -542,5 +544,36 @@ public class OrderDAO implements OrderInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 		return orderNO_list;
+	}
+
+	@Override
+	public List<Integer> selectsOrder_NO() throws Exception {
+		
+		Connection		  conn		  = null;
+		PreparedStatement pstmt		  = null;
+		ResultSet		  rs 		  = null;
+		List<Integer> 	  orderNOList = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT O_NO "
+					+ "FROM ORDERS ");
+			
+			rs = pstmt.executeQuery();
+			orderNOList = new ArrayList<Integer>();
+			
+			while (rs.next()) {
+				Integer orderNO = new Integer(rs.getInt(1));
+				orderNOList.add(orderNO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return orderNOList;
 	}
 }
