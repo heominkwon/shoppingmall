@@ -17,11 +17,10 @@ public interface OrderInterface {
 	OrderDTO selectOrder(int o_no) throws Exception;
 	
 	List<OrderDTO> selectOrderAll() throws Exception;
-	List<OrderDTO> selectOrderAllByO_pay(int o_pay) throws Exception;
-	List<OrderDTO> selectOrderAllByO_mno(int o_mno) throws Exception;
-	
-	int IsPaid(int o_no) throws Exception;
-	
+	List<OrderDTO> selectOrderAll(int o_mno) throws Exception;
+
 	List<Integer> selectO_noAll() throws Exception;
 	List<Integer> selectO_noAll (int o_mno) throws Exception;
+	
+	int IsPaid(int o_no) throws Exception;
 }

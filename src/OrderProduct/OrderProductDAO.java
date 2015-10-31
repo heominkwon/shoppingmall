@@ -13,14 +13,11 @@ import javax.sql.DataSource;
 
 public class OrderProductDAO implements OrderProductInterface{
 
-	private OrderProductDAO() {}
-	
+	private OrderProductDAO() {}	
 	private static OrderProductDAO instance = new OrderProductDAO();
-	
 	public static OrderProductDAO getInstace() {
 		return instance;
 	}
-	
 	@Override
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
@@ -70,16 +67,16 @@ public class OrderProductDAO implements OrderProductInterface{
 	}
 
 	@Override
-	public void deleteOrderProduct(OrderProductDTO orderproduct) throws Exception {
+	public void deleteOrderProduct(int op_no) throws Exception {
 		
-		Connection		  conn  = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn  = getConnection();
+			conn = getConnection();
 			pstmt = conn.prepareStatement(
 					"DELETE FROM ORDER_PRODUCT WHERE OP_NO=?");
-			pstmt.setInt(1, orderproduct.getOP_no());
+			pstmt.setInt(1, op_no);
 			
 			pstmt.executeUpdate();
 			
@@ -92,7 +89,30 @@ public class OrderProductDAO implements OrderProductInterface{
 	}
 
 	@Override
-	public void updateOrderProduct(OrderProductDTO orderproduct) throws Exception {
+	public void updateOP_ono(int op_no, int updateOP_ono) throws Exception {
+		
+		Connection 		  conn  = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE "
+					+ "ORDER_PRODUCT "
+					+ "SET OP_ONO=? "
+					+ "WHERE OP_NO=?");
+			pstmt.setInt(1, updateOP_ono);
+			pstmt.setInt(2, op_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {} 
+		}
+	}
+	@Override
+	public void updateOP_pno(int op_no, int updateOP_pno) throws Exception {
 		
 		Connection		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -102,13 +122,60 @@ public class OrderProductDAO implements OrderProductInterface{
 			pstmt = conn.prepareStatement(
 					"UPDATE "
 					+ "ORDER_PRODUCT "
-					+ "SET OP_ONO=?, OP_PNO=?, OP_COUNT, OP_PRICT "
+					+ "SET OP_PNO=?  "
 					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, orderproduct.getOP_ono());
-			pstmt.setInt(2, orderproduct.getOP_pno());
-			pstmt.setInt(3, orderproduct.getOP_count());
-			pstmt.setInt(4, orderproduct.getOP_price());
-			pstmt.setInt(5, orderproduct.getOP_no());
+			pstmt.setInt(1, updateOP_pno);
+			pstmt.setInt(2, op_no);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}	
+	}
+	@Override
+	public void updateOP_count(int op_no, int updateOP_count) throws Exception {
+		
+		Connection		  conn  = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE "
+					+ "ORDER_PRODUCT "
+					+ "SET OP_COUNT=?  "
+					+ "WHERE OP_NO=?");
+			pstmt.setInt(1, updateOP_count);
+			pstmt.setInt(2, op_no);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+	}
+	@Override
+	public void updateOP_price(int op_no, int updateOP_price) throws Exception {
+		
+		Connection		  conn  = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"UPDATE "
+					+ "ORDER_PRODUCT "
+					+ "SET OP_PRICE=?  "
+					+ "WHERE OP_NO=?");
+			pstmt.setInt(1, updateOP_price);
+			pstmt.setInt(2, op_no);
 			
 			pstmt.executeUpdate();
 			
@@ -121,12 +188,12 @@ public class OrderProductDAO implements OrderProductInterface{
 	}
 
 	@Override
-	public OrderProductDTO selectOrderProduct(OrderProductDTO orderproduct) throws Exception {
+	public OrderProductDTO selectOrderProduct(int op_no) throws Exception {
 		
 		Connection		  conn 	= null;
 		PreparedStatement pstmt = null;
-		ResultSet 		  rs 	= null;
-		OrderProductDTO   dto 	= null;
+		ResultSet		  rs 	= null;
+		OrderProductDTO	  dto 	= null;
 		
 		try {
 			conn  = getConnection();
@@ -135,15 +202,15 @@ public class OrderProductDAO implements OrderProductInterface{
 					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
 					+ "FROM ORDER_PRODUCT "
 					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, orderproduct.getOP_no());
+			pstmt.setInt(1, op_no);
 			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				dto = new OrderProductDTO();
 				dto.setOP_no(rs.getInt(1));
-				dto.setOP_ono(rs.getInt(2));
-				dto.setOP_no(rs.getInt(3));
+				dto.setOP_no(rs.getInt(2));
+				dto.setOP_pno(rs.getInt(3));
 				dto.setOP_count(rs.getInt(4));
 				dto.setOP_price(rs.getInt(5));
 			}
@@ -151,7 +218,7 @@ public class OrderProductDAO implements OrderProductInterface{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
+			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
@@ -159,7 +226,7 @@ public class OrderProductDAO implements OrderProductInterface{
 	}
 
 	@Override
-	public List<OrderProductDTO> selectsOrderProduct() throws Exception {
+	public List<OrderProductDTO> selectOrderProductAll() throws Exception {
 		
 		Connection		  	  conn    = null;
 		PreparedStatement	  pstmt   = null;
@@ -193,234 +260,9 @@ public class OrderProductDAO implements OrderProductInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 		return dtolist;
-	}
-
-	
-	
+	}	
 	@Override
-	public void delete_nNO(int need_orderproductNO) throws Exception {
-
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"DELETE FROM ORDER_PRODUCT WHERE OP_NO=?");
-			pstmt.setInt(1, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	
-	
-	@Override
-	public void updateNO_nNO(int change_orderproductNO, int need_orderproductNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_NO=?  "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, change_orderproductNO);
-			pstmt.setInt(2, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateNO_nONO(int change_orderproductNO, int need_ONO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_NO=?  "
-					+ "WHERE OP_ONO=?");
-			pstmt.setInt(1, change_orderproductNO);
-			pstmt.setInt(2, need_ONO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateONO_nNO(int change_ONO, int need_orderproductNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_ONO=?  "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, change_ONO);
-			pstmt.setInt(2, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}	
-	}
-
-	@Override
-	public void updatePNO_nNO(int change_productNO, int need_orderproductNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_PNO=?  "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, change_productNO);
-			pstmt.setInt(2, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}	
-	}
-
-	@Override
-	public void updateCOUNT_nNO(int change_COUNT, int need_orderproductNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_COUNT=?  "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, change_COUNT);
-			pstmt.setInt(2, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updatePRICE_nNO(int change_PRICE, int need_orderproductNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "ORDER_PRODUCT "
-					+ "SET OP_PRICE=?  "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, change_PRICE);
-			pstmt.setInt(2, need_orderproductNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		}finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	
-	
-	@Override
-	public OrderProductDTO selectOrderProduct(int need_orderproductNO) throws Exception {
-		
-		Connection		  conn 	= null;
-		PreparedStatement pstmt = null;
-		ResultSet		  rs 	= null;
-		OrderProductDTO	  dto 	= null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT "
-					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
-					+ "FROM ORDER_PRODUCT "
-					+ "WHERE OP_NO=?");
-			pstmt.setInt(1, need_orderproductNO);
-			
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				dto = new OrderProductDTO();
-				dto.setOP_no(rs.getInt(1));
-				dto.setOP_no(rs.getInt(2));
-				dto.setOP_pno(rs.getInt(3));
-				dto.setOP_count(rs.getInt(4));
-				dto.setOP_price(rs.getInt(5));
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-		return dto;
-	}
-
-	
-	
-	@Override
-	public List<OrderProductDTO> selectsOrderProduct(int need_ONO) throws Exception {
+	public List<OrderProductDTO> selectOrderProductAll(int op_ono) throws Exception {
 		
 		Connection			  conn    = null;
 		PreparedStatement 	  pstmt   = null;
@@ -433,7 +275,7 @@ public class OrderProductDAO implements OrderProductInterface{
 					"SELECT OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
 					+ "FROM ORDER_PRODUCT "
 					+ "WHERE OP_ONO=?");
-			pstmt.setInt(1, need_ONO);
+			pstmt.setInt(1, op_ono);
 			
 			rs = pstmt.executeQuery();
 			dtolist = new ArrayList<OrderProductDTO>();
@@ -457,4 +299,5 @@ public class OrderProductDAO implements OrderProductInterface{
 		}
 		return dtolist;
 	}
+
 }

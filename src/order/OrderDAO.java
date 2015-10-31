@@ -196,43 +196,7 @@ public class OrderDAO implements OrderInterface{
 		return dtoList;
 	}
 	@Override
-	public List<OrderDTO> selectOrderAllByO_pay(int o_pay) throws Exception {
-		
-		Connection		  conn    = null;
-		PreparedStatement pstmt   = null;
-		ResultSet		  rs      = null;
-		List<OrderDTO>    dtolist = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY "
-					+ "FROM ORDERS "
-					+ "WHERE O_PAY=?");
-			pstmt.setInt(1, o_pay);
-			
-			rs = pstmt.executeQuery();
-			dtolist = new ArrayList<OrderDTO>();
-			
-			while (rs.next()) {
-				OrderDTO dto = new OrderDTO();
-				dto.setO_no(rs.getInt(1));
-				dto.setO_mno(rs.getInt(2));
-				dto.setO_pay(rs.getInt(3));
-				dtolist.add(dto);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-		return dtolist;
-	}
-	@Override
-	public List<OrderDTO> selectOrderAllByO_mno(int o_mno) throws Exception {
+	public List<OrderDTO> selectOrderAll(int o_mno) throws Exception {
 		
 		Connection 		  conn    = null;
 		PreparedStatement pstmt   = null;
