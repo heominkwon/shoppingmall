@@ -95,32 +95,7 @@ public class CategoryDAO implements CategoryInterface{
 	}
 
 	@Override
-	public void updateCategory(int c_no, int updateC_no) throws Exception {
-
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "CATEGORY "
-					+ "SET C_NO=? "
-					+ "WHERE C_NO=?");
-			pstmt.setInt(1, updateC_no);
-			pstmt.setInt(2, c_no);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)  try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-	@Override
-	public void updateCategory(int c_no, String updateC_name) throws Exception {
+	public void updateC_name(int c_no, String updateC_name) throws Exception {
 
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -145,32 +120,7 @@ public class CategoryDAO implements CategoryInterface{
 		}
 	}
 	@Override
-	public void updateCategory(String c_name, int updateC_no) throws Exception {
-
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "CATEGORY "
-					+ "SET C_NO=? "
-					+ "WHERE C_NAME=?");
-			pstmt.setInt(1, updateC_no);
-			pstmt.setString(2, c_name);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)  try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-	@Override
-	public void updateCategory(String c_name, String updateC_name) throws Exception {
+	public void updateC_name(String c_name, String updateC_name) throws Exception {
 
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -338,7 +288,7 @@ public class CategoryDAO implements CategoryInterface{
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"SELECT "
-					+ "C_NAME "
+					+ "C_NO, C_NAME "
 					+ "FROM "
 					+ "CATEGORY");
 			rs = pstmt.executeQuery();
