@@ -18,8 +18,8 @@ public interface CategoryInterface {
 	CategoryDTO selectCategory(int c_no) throws Exception;
 	CategoryDTO selectCategory(String c_name) throws Exception;
 	
-	List<Integer> selectAllC_no() throws Exception;
-	List<Integer> selectAllC_name() throws Exception;
+	List<Integer> selectC_noAll() throws Exception;
+	List<Integer> selectC_nameAll() throws Exception;
 	
 	List<CategoryDTO> selectAll() throws Exception;
 

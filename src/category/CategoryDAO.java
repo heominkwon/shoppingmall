@@ -214,7 +214,7 @@ public class CategoryDAO implements CategoryInterface{
 	}
 
 	@Override
-	public List<Integer> selectAllC_no() throws Exception {
+	public List<Integer> selectC_noAll() throws Exception {
 		
 		Connection 		  conn	   = null;
 		PreparedStatement pstmt	   = null;
@@ -245,7 +245,7 @@ public class CategoryDAO implements CategoryInterface{
 		return c_noList;
 	}
 	@Override
-	public List<Integer> selectAllC_name() throws Exception {
+	public List<Integer> selectC_nameAll() throws Exception {
 		
 		Connection 	      conn 		 = null;
 		PreparedStatement pstmt 	 = null;
