@@ -21,6 +21,6 @@ public interface CategoryInterface {
 	List<Integer> selectC_noAll() throws Exception;
 	List<Integer> selectC_nameAll() throws Exception;
 	
-	List<CategoryDTO> selectAll() throws Exception;
+	List<CategoryDTO> selectCategoryAll() throws Exception;
 
 }
