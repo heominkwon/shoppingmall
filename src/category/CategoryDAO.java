@@ -279,9 +279,9 @@ public class CategoryDAO implements CategoryInterface{
 	@Override
 	public List<CategoryDTO> selectAll() throws Exception {
 		
-		Connection 	      conn 	 = null;
-		PreparedStatement pstmt  = null;
-		ResultSet 		  rs	 = null;
+		Connection 	      conn 	  = null;
+		PreparedStatement pstmt   = null;
+		ResultSet 		  rs	  = null;
 		List<CategoryDTO> dtoList = null;
 		
 		try {
