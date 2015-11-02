@@ -930,7 +930,7 @@ public class ProductDAO implements ProductInterface{
 	}
 	
 	@Override
-	public List<ProductDTO> selectAll() throws Exception {
+	public List<ProductDTO> selectProductAll() throws Exception {
 		
 		Connection		  conn    = null;
 		PreparedStatement pstmt   = null;
@@ -942,7 +942,8 @@ public class ProductDAO implements ProductInterface{
 			pstmt = conn.prepareStatement(
 					"SELECT "
 					+ "P_NO, P_CNO, P_NAME, P_PRICE, P_COUNT, P_DESC, P_PATH, P_REGDATE "
-					+ "FROM PRODUCT ");
+					+ "FROM PRODUCT "
+					+ "ORDER BY P_NO");
 			
 			rs = pstmt.executeQuery();
 			dtolist = new ArrayList<ProductDTO>();
@@ -970,7 +971,7 @@ public class ProductDAO implements ProductInterface{
 		return dtolist;
 	}
 	@Override
-	public List<ProductDTO> selectAll(int NEED_categoryNO) throws Exception {
+	public List<ProductDTO> selcetProductAll(int NEED_categoryNO) throws Exception {
 		
 		Connection		  conn    = null;
 		PreparedStatement pstmt   = null;

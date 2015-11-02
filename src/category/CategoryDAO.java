@@ -50,6 +50,30 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
+	@Override
+	public void insertCategory(String c_name) throws Exception {
+		
+		Connection 		  conn  = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"INSERT INTO CATEGORY "
+					+ "(C_NO, C_NAME) "
+					+ "VALUES "
+					+ "(CATEGORY_SEQ.NEXTVAL,?)");
+			pstmt.setString(1, c_name);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+	}
 	
 	@Override
 	public void deleteCategory(int c_no) throws Exception {
@@ -73,7 +97,7 @@ public class CategoryDAO implements CategoryInterface{
 		}
 	}
 	@Override
-	public void deleteCategory(String c_name) throws Exception {
+	public void deleteCategory(String C_NO) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -81,8 +105,8 @@ public class CategoryDAO implements CategoryInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"DELETE FROM CATEGORY WHERE C_NAME=?");
-			pstmt.setString(1, c_name);
+					"DELETE FROM CATEGORY WHERE C_NO=?");
+			pstmt.setString(1, C_NO);
 			
 			pstmt.executeUpdate();
 			
@@ -120,7 +144,7 @@ public class CategoryDAO implements CategoryInterface{
 		}
 	}
 	@Override
-	public void updateC_name(String c_name, String updateC_name) throws Exception {
+	public void updateC_name(String c_no, String updateC_name) throws Exception {
 
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -131,9 +155,9 @@ public class CategoryDAO implements CategoryInterface{
 					"UPDATE "
 					+ "CATEGORY "
 					+ "SET C_NAME=? "
-					+ "WHERE C_NAME=?");
+					+ "WHERE C_NO=?");
 			pstmt.setString(1, updateC_name);
-			pstmt.setString(2, c_name);
+			pstmt.setString(2, c_no);
 			
 			pstmt.executeUpdate();
 			
@@ -309,5 +333,32 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 		return dtoList;
+	}
+	@Override
+	public int getCategoryCount() throws Exception {
+		
+		Connection		  conn 			= null;
+		PreparedStatement pstmt			= null;
+		ResultSet 		  rs 		    = null;
+		int 			  categoryCount = 0;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM CATEGORY");
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				categoryCount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)    try {rs.close();}	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn != null)  try {conn.close();} 	catch (SQLException se) {}
+		}
+		return categoryCount;
 	}
 }

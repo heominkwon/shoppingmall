@@ -57,8 +57,8 @@ public interface ProductInterface {
 	List<Integer> selectP_noAll() throws Exception;
 	List<String>  selectP_nameAll() throws Exception;
 
-	List<ProductDTO> selectAll() throws Exception;
-	List<ProductDTO> selectAll(int p_cno) throws Exception;
+	List<ProductDTO> selectProductAll() throws Exception;
+	List<ProductDTO> selcetProductAll(int p_cno) throws Exception;
 	
 	int getProductCount() throws Exception;
 	List getProducts(int start, int end) throws Exception;
