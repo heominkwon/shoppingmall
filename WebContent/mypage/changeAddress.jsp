@@ -12,6 +12,7 @@
 <%
 	int pageSize = 20;
 	SimpleDateFormat sdf= new SimpleDateFormat("yy-MM-dd");
+
 %>
 <%
 	String pageNum = request.getParameter("pageNum");
@@ -27,11 +28,11 @@
 	OrderDAO od = OrderDAO.getInstance();
 	ProductDAO pd = ProductDAO.getInstance();
 	OrderProductDAO opd = OrderProductDAO.getInstance();
-	count=od.getMemOrderCount(55); 
-	//count = od.getMemOrderCount(Integer.parseInt(session.getAttribute("m_no").toString()));
+	//count=od.getMemOrderCount(55); 
+	count = od.getMemOrderCount(Integer.parseInt(session.getAttribute("m_no").toString()));
 	if(count > 0){
-		orderList = od.selectsMemOrder(startRow, endRow, 55);
-		//orderList = od.selectsMemOrder(startRow, endRow, Integer.parseInt(session.getAttribute("m_no").toString()));
+		//orderList = od.selectsMemOrder(startRow, endRow, 55);
+		orderList = od.selectsMemOrder(startRow, endRow, Integer.parseInt(session.getAttribute("m_no").toString()));
 	}
 %>
 

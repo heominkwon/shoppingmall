@@ -1,6 +1,6 @@
 <%@ page  contentType="text/html; charset=EUC-KR"%>
-<%@ page import = "logon.LogonDBBean" %>
- 
+<%@ page import = "project1.logon.LogonDBBean" %>
+
 <html>
 <head>
 <title>È¸¿øÅ»Åð</title>

@@ -4,9 +4,9 @@
 <%@ page import = "Connection.ConnectionDAO" %>
 <%@ page import = "Connection.ConnectionDTO" %>
 <%@ page import = "java.sql.Timestamp" %>
- 
+
 <% request.setCharacterEncoding("euc-kr"); %>
- 
+
 <%
 	String id = request.getParameter("M_ID");	
 	String passwd = request.getParameter("M_PW");
@@ -31,6 +31,7 @@
 		history.go(-1);
 	</script>	
 <%} 
+	if(check==0){
 	String current=new Timestamp(System.currentTimeMillis()).toString();
 	int year=Integer.parseInt(current.substring(0,4));
 	int month=Integer.parseInt(current.substring(5,7));
@@ -52,5 +53,6 @@
 				
 		
 	}
+}
 
 %>

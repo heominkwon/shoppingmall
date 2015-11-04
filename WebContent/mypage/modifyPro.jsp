@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=euc-kr" %>
-<%@ page import = "logon.LogonDBBean" %>
+<%@ page import = "project1.logon.LogonDBBean" %>
 
 
 <% request.setCharacterEncoding("euc-kr");%>
 
-<jsp:useBean id="member" class="logon.LogonDataBean">
+<jsp:useBean id="member" class="project1.logon.LogonDataBean">
     <jsp:setProperty name="member" property="*" />
 </jsp:useBean>
  
@@ -36,5 +36,5 @@
     </td>
   </tr>
 </table>
-
+</body>
 </html>

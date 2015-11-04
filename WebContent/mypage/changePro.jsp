@@ -9,9 +9,8 @@
 	int o_no=Integer.parseInt(request.getParameter("o_no").toString());
 	String address=request.getParameter("address");
 			
-			OrderDAO dbpro = OrderDAO.getInstance();
+			OrderDAO dbpro = OrderDAO.getInstance();			
 			
-			System.out.println(o_no+" "+address);
 			dbpro.updateO_address(o_no, address);
 %>
 <body>

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=euc-kr" %>
-<%@ page import = "logon.LogonDBBean" %>
+<%@ page import = "project1.logon.LogonDBBean" %>
 
 <html>
 <title>ID 중복확인</title>
@@ -7,9 +7,9 @@
 
 <%
 
-String id = request.getParameter("id"); //get방식으로 보냈죠
-LogonDBBean manager = LogonDBBean.getInstance();
-int check= manager.confirmId(id);
+    String id = request.getParameter("id"); //get방식으로 보냈죠
+   LogonDBBean manager = LogonDBBean.getInstance();
+    int check= manager.confirmId(id);
  
  %>
 <%

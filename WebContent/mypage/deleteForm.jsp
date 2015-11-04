@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import = "java.util.List" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
+
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<table width="1000" height="1" border="0" align="center" >
+<table width="1000" height="1" border="0" align="center">
 	<tr>
 		<td height="100" align="center" colspan="2">
 			<jsp:include page="/shoppingmall/top.jsp"/>
@@ -144,55 +144,46 @@ function checkIt()
 	
 	 <tr>
 	
-		<td height="700" colspan="2" border="1" valign="top" align="left"> <br /><br /><br />
+		<td height="700" colspan="2" valign="top" align="center"><br /><br /><br />
 			
 			
-<html lang=''>
+			<html>
 <head>
-   <meta charset='utf-8'>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="/jsp/shoppingmall/styles.css">
-   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-   <script src="/jsp/shoppingmall/script.js"></script>
-   <title>CSS MenuMaker</title>
+
+<title>회원탈퇴</title>
+
+	<script language="javascript">
+	</script>
 </head>
+<body>
+<form name="myform" action="/jsp/join/deletePro.jsp" method="post" onSubmit="return checkIt()">
 
-<style type="text/css">
-a{text-decoration:none;font-weight:bold:color:#ffffff:}
-#cssmenu{float:left; width:180px; height:500px; text-align:left;}
+<table border="1" >
+	<tr>
+		<td>
+			<font size="+1"><b>회원탈퇴</b></font> 
+		</td>
+	</tr>
+	<br /><br /><br /><br />
+	<tr>
+		
+		<td>
+			비밀번호: <input type=password name="passwd" maxlength="12">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type=submit value="회원탈퇴">
+			<input type="button" value="취소" onclick="javascript:window.location='/jsp/shoppingmall/template.jsp'">
+		</td>
+	</tr>
+	
 
-</style>
+</table>
 
-<div id='cssmenu'>
-<ul>
-   <li class='has-sub'><a href="/jsp/shoppingmall/template.jsp"><span>Home</span></a></li>
-   <li class='has-sub'><a href='#'><span>주문/배송</span></a>
-      <ul>
-         <li><a href="/jsp/join/new_order.jsp" target="ppp"><span>주문내역/구매확정</span></a></li>
-         <li><a href="/jsp/join/cancle_order.jsp" target="ppp"><span>주문교환/반품</span></a></li>
-         <li><a href="/jsp/join/changeAddress.jsp" target="ppp"><span>배송지/주문내용변경</span></a></li>
-      </ul>
-   </li>
-  
-   <li class='has-sub'><a href='#'><span>나의정보</span></a>
-   	  <ul>
-   		<li><a href="/jsp/join/modifyForm.jsp"><span>회원정보관리</span></a></li>
-   		<li><a href="/jsp/join/deleteForm.jsp"><span>회원탈퇴</span></a></li>
-   		
-   	  </ul>
-   </li>
-</ul>
-
-</div>
-
-
-<div>
-<iframe src="/jsp/join/new_order.jsp" width="820" height="500" name="ppp" frameborder="0" align="center"></iframe>
-</div>
-
-
-			
+</form>
+</body>
+</html>
 			
 			
 		</td>
@@ -210,4 +201,5 @@ a{text-decoration:none;font-weight:bold:color:#ffffff:}
 </body>
 </html>
 
+   
     

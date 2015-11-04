@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<table width="1000" height="1" border="0" align="center">
+<table width="1000" height="100" border="0" align="center">
 	<tr>
 		<td height="100" align="center" colspan="2">
 			<jsp:include page="/shoppingmall/top.jsp"/>
@@ -24,7 +24,7 @@
 	   <style>
                 #topMenu {
                         height: 40px;
-                        width: 1200px;
+                        width: 1170px;
                 }
 
                 #topMenu ul li {
@@ -57,19 +57,19 @@
 	
 		<ul>
 			
-			<li><a class="menuLink" href="template.jsp">HOME</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\template.jsp">HOME</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="intro.jsp">회사소개</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\intro.jsp">회사소개</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="notice.jsp">공지사항</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\notice.jsp">공지사항</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="category.jsp">카테고리</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\category.jsp">카테고리</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="order.jsp">주문배송</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\order.jsp">주문배송</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="QnA.jsp">QnA</a></li>
+			<li><a class="menuLink" href="\jsp\qnaboard\QnA.jsp">QnA</a></li>
 			<li>|</li>
-			<li><a class="menuLink" href="customerCenter.jsp">고객센터</a></li>
+			<li><a class="menuLink" href="\jsp\shoppingmall\event\event.jsp">이벤트</a></li>
 		</ul>
 	</nav>
     </td>
@@ -117,13 +117,13 @@ function checkIt()
               
             <input type="submit" name="Submit" value="로그인">
             <input type="button"  value="회원가입" 
-            onclick="javascript:window.location='inputForm.jsp'">
+            onclick="javascript:window.location='\jsp\join\inputForm.jsp'">
        </form></td>
      <%}else{%>
              <td align="left">
-             <%=session.getAttribute("memId")%>님이 방문하셨습니다
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=session.getAttribute("memId")%>님이 방문하셨습니다
              	<form  method="post" action="logout.jsp">
-             	 <input type="submit"  value="로그아웃" >
+             	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  value="로그아웃" >
            		 <input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
 				</form></td><br>
  <%}
@@ -182,8 +182,8 @@ function checkIt()
 </script>
 
 
-<form method="post" action="inputPro.jsp" name="userinput" onSubmit="return checkIt()">
-	<table width="450" height="100" border="1" align="center" cellpadding="10">
+<form method="post" action="/jsp/join/inputPro.jsp" name="userinput" onSubmit="return checkIt()">
+	<table width="450" height="50" border="1" align="center" cellpadding="10">
 		<tr>
 			<td colspan="2" align="center">
 				회원가입
@@ -241,7 +241,7 @@ function checkIt()
 		<tr>
 			<td colspan="2" align="center" >
 				<input type="submit" name="confirm" value="가입신청">
-				<input type="button" value="가입취소" OnClick="javascript:window.loaction='main.jsp'">
+				<input type="button" value="가입취소" onclick="javascript:window.location='/jsp/shoppingmall/template.jsp'">
 			</td>
 		</tr>	
 	
