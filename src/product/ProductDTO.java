@@ -12,6 +12,21 @@ public class ProductDTO {
 	private String p_path;
 	private Timestamp p_regdate; 
 	
+	public ProductDTO () {
+		
+	}
+	
+	public ProductDTO(int p_cno, String p_name, int p_price, int p_count, String p_desc, String p_path, Timestamp p_regdate) {
+		this.p_no = 0;
+		this.p_cno = p_cno;
+		this.p_name = p_name;
+		this.p_price = p_price;
+		this.p_count = p_count;
+		this.p_desc = p_desc;
+		this.p_path = p_path;
+		this.p_regdate = p_regdate;
+	}
+	
 	public int getP_no(){
 		return this.p_no;
 	}

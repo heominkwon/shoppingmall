@@ -9,37 +9,15 @@ public interface OrderProductInterface {
 	
 	void insertOrderProduct(OrderProductDTO orderproduct) throws Exception;
 	
-	void deleteOrderProduct(OrderProductDTO orderproduct) throws Exception;
+	void deleteOrderProduct(int op_no) throws Exception;
 	
-	void updateOrderProduct(OrderProductDTO orderproduct) throws Exception;
+	void updateOP_ono(int op_no, int updateOP_ono) throws Exception;
+	void updateOP_pno(int op_no, int updateOP_pno) throws Exception;
+	void updateOP_count(int op_no, int updateOP_count) throws Exception;
+	void updateOP_price(int op_no, int updateOP_price) throws Exception;	
 	
-	OrderProductDTO selectOrderProduct(OrderProductDTO orderproduct) throws Exception;
+	OrderProductDTO selectOrderProduct(int op_no) throws Exception;
 	
-	List<OrderProductDTO> selectsOrderProduct() throws Exception;
-	
-	
-	
-	void delete_nNO(int need_orderproductNO) throws Exception;
-	
-	
-	
-	void updateNO_nNO(int change_orderproductNO, int need_orderproductNO) throws Exception;
-	
-	void updateNO_nONO(int change_orderproductNO, int need_ONO) throws Exception;
-	
-	void updateONO_nNO(int change_ONO, int need_orderproductNO) throws Exception;
-	
-	void updatePNO_nNO(int change_productNO, int need_orderproductNO) throws Exception;
-	
-	void updateCOUNT_nNO(int change_COUNT, int need_orderproductNO) throws Exception;
-	
-	void updatePRICE_nNO(int change_PRICE, int need_orderproductNO) throws Exception;
-	
-	
-	
-	OrderProductDTO selectOrderProduct(int need_orderproductNO) throws Exception;
-	
-	
-	
-	List<OrderProductDTO> selectsOrderProduct(int need_ONO) throws Exception;
+	List<OrderProductDTO> selectOrderProductAll() throws Exception;
+	List<OrderProductDTO> selectOrderProductAll(int op_ono) throws Exception;
 }

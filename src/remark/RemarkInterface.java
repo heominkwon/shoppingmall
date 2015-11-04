@@ -8,43 +8,13 @@ public interface RemarkInterface {
 	
 	void insertRemark(RemarkDTO remark) throws Exception;
 	
-	void deleteRemark(RemarkDTO remark) throws Exception;
+	void deleteRemark(int r_no) throws Exception;
 	
-	void updateRemark(RemarkDTO remark) throws Exception;
+	void updateR_pno(int r_no, int updateR_pno) throws Exception;
+	void updateR_title(int r_no, String updateR_title) throws Exception;
+	void updateR_content(int r_no, String updateR_content) throws Exception;
+
+	RemarkDTO selectRemark(int r_no) throws Exception;
 	
-	RemarkDTO selectRemark(RemarkDTO remark) throws Exception;
-	
-	
-	
-	void delete_nNO(int NEED_remarkNO) throws Exception;
-	
-	void delete_nPNO(int NEED_productNO) throws Exception;
-	
-	void delete_nWRITER(String NEED_WRITER) throws Exception;
-	
-	
-	
-	void updateNO_nNO(int change_remarkNO, int need_remarkNO) throws Exception;
-	
-	void updatePNO_nNO(int change_remarkPNO, int need_remarkNO) throws Exception;
-	
-	void updateTITLE_nNO(String change_remarkTITLE, int need_remarkNO) throws Exception;
-	
-	void updateCONTENT_nNO(String change_remarkCONTENT, int need_remarkNO) throws Exception;
-	
-	void updateWRITER_nNO(String change_remarkWRITER, int need_remarkNO) throws Exception;
-	
-	
-	
-	RemarkDTO selectRemark(int need_remarkNO) throws Exception;
-	
-	
-	
-	List<RemarkDTO> selectsRemark_nPNO(int need_remarkPNO) throws Exception;
-	
-	List<RemarkDTO> selectsRemark_nTITLE(String need_remarkTITLE) throws Exception;
-	
-	List<RemarkDTO> selectsRemark_nCONTENT(String need_remarkCONTENT) throws Exception;
-	
-	List<RemarkDTO> selectsRemark_nWRITER(String need_remarkWRITER) throws Exception;
+	List<RemarkDTO> selectRemarkAll(int r_pno) throws Exception;
 }

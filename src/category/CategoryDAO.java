@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -12,18 +14,15 @@ import javax.sql.DataSource;
 public class CategoryDAO implements CategoryInterface{
 
 	private CategoryDAO() {};
-	
 	private static CategoryDAO instance = new CategoryDAO();
-	
 	public static CategoryDAO getInstance(){
 		return instance;
-	}
-	
+	}	
 	@Override
 	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-		Context envCtx = (Context)initCtx.lookup("java:/comp/env");
-		DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
+		Context    initCtx = new InitialContext();
+		Context    envCtx  = (Context)initCtx.lookup("java:/comp/env");
+		DataSource ds      = (DataSource)envCtx.lookup("jdbc/orcl");
 		return ds.getConnection();
 	}
 
@@ -51,9 +50,8 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
 	@Override
-	public void deleteCategory(CategoryDTO category) throws Exception {
+	public void insertCategory(String c_name) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -61,84 +59,24 @@ public class CategoryDAO implements CategoryInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"DELETE FROM CATEGORY WHERE C_NO=?");
-			pstmt.setInt(1, category.getC_no());
+					"INSERT INTO CATEGORY "
+					+ "(C_NO, C_NAME) "
+					+ "VALUES "
+					+ "(CATEGORY_SEQ.NEXTVAL,?)");
+			pstmt.setString(1, c_name);
 			
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateCategory(CategoryDTO category) throws Exception {
-		
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "CATEGORY "
-					+ "SET C_NAME=? "
-					+ "WHERE C_NO=?");
-			pstmt.setString(1, category.getC_name());
-			pstmt.setInt(2, category.getC_no());
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public CategoryDTO selectCategory(CategoryDTO category) throws Exception {
-		
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		ResultSet 		  rs    = null;
-		CategoryDTO       dto   = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT "
-					+ "C_NO, C_NAME "
-					+ "WHERE "
-					+ "C_NO=?");
-			pstmt.setInt(1, category.getC_no());
-			
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				dto = new CategoryDTO();
-				dto.setC_no(rs.getInt(1));
-				dto.setC_name(rs.getString(2));
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs 	  != null) try {rs.close();}    catch (SQLException se) {}
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
-		return dto;
 	}
-
-	
 	
 	@Override
-	public void deleteCategory(int NEED_categoryNO) throws Exception {
+	public void deleteCategory(int c_no) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -147,7 +85,7 @@ public class CategoryDAO implements CategoryInterface{
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"DELETE FROM CATEGORY WHERE C_NO=?");
-			pstmt.setInt(1, NEED_categoryNO);
+			pstmt.setInt(1, c_no);
 			
 			pstmt.executeUpdate();
 			
@@ -155,12 +93,11 @@ public class CategoryDAO implements CategoryInterface{
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
 	@Override
-	public void deleteCategory(String NEED_categoryNAme) throws Exception {
+	public void deleteCategory(String C_NO) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -168,8 +105,8 @@ public class CategoryDAO implements CategoryInterface{
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"DELETE FROM CATEGORY WHERE C_NAME=?");
-			pstmt.setString(1, NEED_categoryNAme);
+					"DELETE FROM CATEGORY WHERE C_NO=?");
+			pstmt.setString(1, C_NO);
 			
 			pstmt.executeUpdate();
 			
@@ -177,40 +114,12 @@ public class CategoryDAO implements CategoryInterface{
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	
-	
-	@Override
-	public void updateCategory(int NEED_categoryNO, int change_categoryNO) throws Exception {
-
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "CATEGORY "
-					+ "SET C_NO=? "
-					+ "WHERE C_NO=?");
-			pstmt.setInt(1, change_categoryNO);
-			pstmt.setInt(2, NEED_categoryNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)  try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
 
 	@Override
-	public void updateCategory(int NEED_categoryNO, String change_categoryName) throws Exception {
+	public void updateC_name(int c_no, String updateC_name) throws Exception {
 
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -222,8 +131,8 @@ public class CategoryDAO implements CategoryInterface{
 					+ "CATEGORY "
 					+ "SET C_NAME=? "
 					+ "WHERE C_NO=?");
-			pstmt.setString(1, change_categoryName);
-			pstmt.setInt(2, NEED_categoryNO);
+			pstmt.setString(1, updateC_name);
+			pstmt.setInt(2, c_no);
 			
 			pstmt.executeUpdate();
 			
@@ -234,35 +143,8 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
 	@Override
-	public void updateCategory(String NEED_categoryName, int change_categoryNO) throws Exception {
-
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE "
-					+ "CATEGORY "
-					+ "SET C_NO=? "
-					+ "WHERE C_NAME=?");
-			pstmt.setInt(1, change_categoryNO);
-			pstmt.setString(2, NEED_categoryName);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null)  try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateCategory(String NEED_categoryName, String change_categoryName) throws Exception {
+	public void updateC_name(String c_no, String updateC_name) throws Exception {
 
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -273,9 +155,9 @@ public class CategoryDAO implements CategoryInterface{
 					"UPDATE "
 					+ "CATEGORY "
 					+ "SET C_NAME=? "
-					+ "WHERE C_NAME=?");
-			pstmt.setString(1, change_categoryName);
-			pstmt.setString(2, NEED_categoryName);
+					+ "WHERE C_NO=?");
+			pstmt.setString(1, updateC_name);
+			pstmt.setString(2, c_no);
 			
 			pstmt.executeUpdate();
 			
@@ -286,11 +168,9 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null)  try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
-	
 	
 	@Override
-	public CategoryDTO selectCategory(int NEED_categoryNO) throws Exception {
+	public CategoryDTO selectCategory(int c_no) throws Exception {
 		
 		Connection 		  conn  = null;
 		PreparedStatement pstmt = null;
@@ -304,7 +184,40 @@ public class CategoryDAO implements CategoryInterface{
 					+ "C_NO, C_NAME "
 					+ "FROM CATEGORY "
 					+ "WHERE C_NO=?");
-			pstmt.setInt(1, NEED_categoryNO);
+			pstmt.setInt(1, c_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				dto = new CategoryDTO();
+				dto.setC_no(rs.getInt(1));
+				dto.setC_name(rs.getInt(2));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {pstmt.close();} catch (SQLException se) {}
+		}
+		return dto;
+	}
+	@Override
+	public CategoryDTO selectCategory(String c_name) throws Exception {		
+		Connection 		  conn  = null;
+		PreparedStatement pstmt = null;
+		ResultSet 		  rs    = null;
+		CategoryDTO 	  dto 	= null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "C_NO, C_NAME "
+					+ "FROM CATEGORY "
+					+ "WHERE C_NAME=?");
+			pstmt.setString(1, c_name);
 			
 			rs = pstmt.executeQuery();
 			
@@ -325,27 +238,25 @@ public class CategoryDAO implements CategoryInterface{
 	}
 
 	@Override
-	public CategoryDTO selectCategory(String NEED_categoryName) throws Exception {		
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;
-		ResultSet 		  rs    = null;
-		CategoryDTO 	  dto 	= null;
+	public List<Integer> selectC_noAll() throws Exception {
+		
+		Connection 		  conn	   = null;
+		PreparedStatement pstmt	   = null;
+		ResultSet		  rs 	   = null;
+		List<Integer> 	  c_noList = null;
 		
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
 					"SELECT "
-					+ "C_NO, C_NAME "
-					+ "FROM CATEGORY "
-					+ "WHERE C_NAME=?");
-			pstmt.setString(1, NEED_categoryName);
-			
+					+ "C_NO "
+					+ "FROM "
+					+ "CATEGORY");
 			rs = pstmt.executeQuery();
+			c_noList = new ArrayList<Integer>();
 			
 			while (rs.next()) {
-				dto = new CategoryDTO();
-				dto.setC_no(rs.getInt(1));
-				dto.setC_name(rs.getInt(2));
+				c_noList.add(rs.getInt("C_NO"));
 			}
 			
 		} catch (Exception e) {
@@ -353,8 +264,101 @@ public class CategoryDAO implements CategoryInterface{
 		} finally {
 			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
-		return dto;
+		return c_noList;
+	}
+	@Override
+	public List<Integer> selectC_nameAll() throws Exception {
+		
+		Connection 	      conn 		 = null;
+		PreparedStatement pstmt 	 = null;
+		ResultSet 		  rs		 = null;
+		List<Integer> 	  c_nameList = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "C_NAME "
+					+ "FROM "
+					+ "CATEGORY");
+			rs = pstmt.executeQuery();
+			c_nameList = new ArrayList<Integer>();
+			
+			while (rs.next()) {
+				c_nameList.add(rs.getInt(1));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return c_nameList;
+	}
+
+	@Override
+	public List<CategoryDTO> selectCategoryAll() throws Exception {
+		
+		Connection 	      conn 	  = null;
+		PreparedStatement pstmt   = null;
+		ResultSet 		  rs	  = null;
+		List<CategoryDTO> dtoList = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "C_NO, C_NAME "
+					+ "FROM "
+					+ "CATEGORY");
+			rs = pstmt.executeQuery();
+			dtoList = new ArrayList<CategoryDTO>();
+			
+			while (rs.next()) {
+				CategoryDTO dto = new CategoryDTO();
+				dto.setC_no(rs.getInt(1));
+				dto.setC_name(rs.getString(2));
+				dtoList.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return dtoList;
+	}
+	@Override
+	public int getCategoryCount() throws Exception {
+		
+		Connection		  conn 			= null;
+		PreparedStatement pstmt			= null;
+		ResultSet 		  rs 		    = null;
+		int 			  categoryCount = 0;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM CATEGORY");
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				categoryCount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)    try {rs.close();}	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn != null)  try {conn.close();} 	catch (SQLException se) {}
+		}
+		return categoryCount;
 	}
 }

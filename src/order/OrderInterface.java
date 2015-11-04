@@ -9,39 +9,18 @@ public interface OrderInterface {
 	
 	void insertOrder(OrderDTO order) throws Exception;
 	
-	void deleteOrder(OrderDTO order) throws Exception;
+	void deleteOrder(int o_mno) throws Exception;
 	
-	void updateOrder(OrderDTO order) throws Exception;
+	void updateO_mno(int o_no, int updateO_mno) throws Exception;
+	void updateO_pay(int o_no, int updateO_pay) throws Exception;
 	
-	OrderDTO selectOrder(OrderDTO order) throws Exception;
+	OrderDTO selectOrder(int o_no) throws Exception;
 	
-	List<OrderDTO> selectsOrder() throws Exception;
+	List<OrderDTO> selectOrderAll() throws Exception;
+	List<OrderDTO> selectOrderAll(int o_mno) throws Exception;
+
+	List<Integer> selectO_noAll() throws Exception;
+	List<Integer> selectO_noAll (int o_mno) throws Exception;
 	
-	void delete_NO(int NEED_orderNO) throws Exception;
-	
-	void delete_MNO(int NEED_memberNO) throws Exception;
-	
-	void updateNO_NO(int NEED_orderNO, int change_orderNO) throws Exception;
-	
-	void updateNO_MNO(int NEED_memberNO, int change_orderNO) throws Exception;
-	
-	void updateMNO_NO(int NEED_orderNO, int change_memberNO) throws Exception;
-	
-	void updateMNO_MNO(int NEED_memberNO, int change_memberNO) throws Exception;
-	
-	void updatePAY_NO(int NEED_orderNO, int change_PAY) throws Exception;
-	
-	void updatePAY_MNO(int NEED_memberNO, int change_PAY) throws Exception;
-	
-	OrderDTO selectOrder(int NEED_orderNO) throws Exception;
-	
-	List<OrderDTO> selectsOrders_PAY(int NEED_PAY) throws Exception;
-	
-	List<OrderDTO> selectsOrders_MNO(int NEED_memberNO) throws Exception;
-	
-	int IsPaid(int NEED_orderNO) throws Exception;
-	
-	List<Integer> selectsOrder_NO (int NEED_memberNO) throws Exception;
-	
-	List<Integer> selectsOrder_NO() throws Exception;
+	int IsPaid(int o_no) throws Exception;
 }

@@ -4,10 +4,11 @@
 <%@page import="order.OrderDAO"%>
 <%@page import="order.OrderDTO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%
+
 	OrderDAO OrderManager = OrderDAO.getInstance();
 	List<OrderDTO> orderList = OrderManager.selectsOrder();
 	int orderlistCount = orderList.size();
@@ -17,7 +18,7 @@
 	int OP_listCount = orderproductList.size();
 %>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>order</title>
 </head>
 <body>
@@ -25,6 +26,8 @@
 	<a href="top.jsp">top</a>
 	<a href="inner.jsp">inner</a>
 	<p/>
+	<a href="insert_productform.jsp">INSERT PRODUCT</a>
+	<p />
 	<a href="insert_orderform.jsp">INSERT ORDER</a>
 	<p />
 	<a href="insert_orderproductform.jsp">INSERT ORDER_PRODUCT</a>
@@ -36,11 +39,11 @@
 			<td colspan="5" align="center"><strong>ORDERS</strong></td>
 		</tr>
 		<tr align="center">
-			<td>ÁÖ¹®³»¿ª¹øÈ£</td>
-			<td>°í°´¹øÈ£</td>
-			<td>°áÁ¦»óÅÂ</td>
-			<td>¹è¼ÛÁö</td>
-			<td>ÁÖ¹®ÀÏÀÚ</td>
+			<td>ì£¼ë¬¸ë‚´ì—­ë²ˆí˜¸</td>
+			<td>ê³ ê°ë²ˆí˜¸</td>
+			<td>ê²°ì œìƒíƒœ</td>
+			<td>ë°°ì†¡ì§€</td>
+			<td>ì£¼ë¬¸ì¼ìž</td>
 		</tr>
 		<tr align="lef">
 			<td>O_NO</td>
@@ -70,11 +73,11 @@
 			<td colspan="5" align="center"><strong>ORDER_PRODUCT</strong></td>
 		</tr>
 		<tr align="center">
-			<td>ÁÖ¹®»óÇ°¹øÈ£</td>
-			<td>ÁÖ¹®³»¿ª¹øÈ£</td>
-			<td>»óÇ°¹øÈ£</td>
-			<td>»óÇ°¼ö·®</td>
-			<td>°¡°Ý</td>
+			<td>ì£¼ë¬¸ìƒí’ˆë²ˆí˜¸</td>
+			<td>ì£¼ë¬¸ë‚´ì—­ë²ˆí˜¸</td>
+			<td>ìƒí’ˆë²ˆí˜¸</td>
+			<td>ìƒí’ˆìˆ˜ëŸ‰</td>
+			<td>ê°€ê²©</td>
 		</tr>
 		<tr align="lef">
 			<td>OP_NO</td>

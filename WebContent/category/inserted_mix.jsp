@@ -5,7 +5,7 @@
 <%@page import="product.ProductDAO"%>
 <%@page import="OrderProduct.OrderProductDTO"%>
 <%@page import="OrderProduct.OrderProductDAO"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset="EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
@@ -22,14 +22,13 @@
 	String O_ADDRESS = request.getParameter("O_ADDRESS");
 	Date   O_DATE    = new Date(System.currentTimeMillis());
 	
-	int OP_ONO = Integer.parseInt(request.getParameter("OP_ONO"));
 	int OP_PNO = Integer.parseInt(request.getParameter("OP_PNO"));
 	int OP_COUNT = Integer.parseInt(request.getParameter("OP_COUNT"));
 	int P_PRICE = productManager.selectPrice_nNO(OP_PNO);
 	int OP_PRICE = OP_COUNT * P_PRICE;
 	
 	OrderDTO order = new OrderDTO(O_MNO, O_PAY, O_ADDRESS, O_DATE);
-	OrderProductDTO order_product = new OrderProductDTO(OP_ONO, OP_PNO, OP_COUNT, OP_PRICE);
+	OrderProductDTO order_product = new OrderProductDTO(OP_PNO, OP_COUNT, OP_PRICE);
 	
 	orderManager.insertOrder(order);
 	orderproductManager.insertOrderProduct(order_product);

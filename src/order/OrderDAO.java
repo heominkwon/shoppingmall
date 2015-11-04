@@ -11,18 +11,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
-
 public class OrderDAO implements OrderInterface{
 
 	private OrderDAO() {}
-	
 	private static OrderDAO instance = new OrderDAO();
-	
 	public static OrderDAO getInstance(){
 		return instance;
-	}
-	
+	}	
 	@Override
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
@@ -34,8 +29,8 @@ public class OrderDAO implements OrderInterface{
 	@Override
 	public void insertOrder(OrderDTO order) throws Exception {
 		
-		Connection         conn = null;
-		PreparedStatement pstmt = null;
+		Connection         conn  = null;
+		PreparedStatement  pstmt = null;
 		
 		try {
 			conn  = getConnection();
@@ -58,18 +53,18 @@ public class OrderDAO implements OrderInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
+	
 	@Override
-	public void deleteOrder(OrderDTO order) throws Exception {
+	public void deleteOrder(int o_mno) throws Exception {
 		
-		Connection         conn = null;
+		Connection        conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"DELETE FROM ORDERS WHERE O_NO=?");
-			pstmt.setInt(1, order.getO_no());
+					"DELETE FROM ORDEOS WHERE O_MNO=?");
+			pstmt.setInt(1, o_mno);
 			
 			pstmt.executeUpdate();
 			
@@ -77,26 +72,23 @@ public class OrderDAO implements OrderInterface{
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn != null)  try {conn.close();}  catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
 
 	@Override
-	public void updateOrder(OrderDTO order) throws Exception {
+	public void updateO_mno(int o_no, int updateO_mno) throws Exception {
 		
-		Connection 		  conn  = null;
+		Connection        conn  = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=?, O_MNO=?, O_PAY=?, O_ADDRESS=?, O_DATE=? " 
+					"UPDATE ORDERS SET O_MNO=? "
 					+ "WHERE O_NO=?");
-			pstmt.setInt(1, order.getO_mno());
-			pstmt.setInt(2, order.getO_pay());
-			pstmt.setString(3, order.getO_address());
-			pstmt.setDate(4, order.getO_date());
-			pstmt.setInt(5, order.getO_no());
+			pstmt.setInt(1, updateO_mno);
+			pstmt.setInt(2, o_no);
 			
 			pstmt.executeUpdate();
 			
@@ -104,27 +96,49 @@ public class OrderDAO implements OrderInterface{
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {} 
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
 	@Override
-	public OrderDTO selectOrder(OrderDTO order) throws Exception {
+	public void updateO_pay(int o_no, int updateO_pay) throws Exception {
 		
-		Connection 		  conn 	= null;
+		Connection		  conn  = null;
 		PreparedStatement pstmt = null;
-		ResultSet 		  rs 	= null;;
-		OrderDTO 		  dto 	= null;
-		
 		
 		try {
 			conn  = getConnection();
 			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY, O_ADDRESS, O_DATE "
+					"UPDATE ORDERS O_PAY=? "
+					+ "WHERE O_NO=?");
+			pstmt.setInt(1, updateO_pay);
+			pstmt.setInt(2, o_no);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+	}
+
+	
+	@Override
+	public OrderDTO selectOrder(int o_no) throws Exception {
+		
+		Connection        conn  = null;
+		PreparedStatement pstmt = null;
+		ResultSet         rs    = null;
+		OrderDTO 		  dto   = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT O_NO, O_MNO, O_PAY "
 					+ "FROM ORDERS "
-					+ "WHERE "
-					+ "O_NO=?");
-			pstmt.setInt(1, order.getO_no());
+					+ "WHERE O_NO=?");
+			pstmt.setInt(1, o_no);
 			
 			rs = pstmt.executeQuery();
 			
@@ -133,22 +147,20 @@ public class OrderDAO implements OrderInterface{
 				dto.setO_no(rs.getInt(1));
 				dto.setO_mno(rs.getInt(2));
 				dto.setO_pay(rs.getInt(3));
-				dto.setO_address(rs.getString(4));
-				dto.setO_date(rs.getDate(5));
 			}
-		} catch (Exception e) {
+			
+		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
-			if (rs 	  != null) try {rs.close();}    catch (SQLException se) {}
+			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+			if (conn  != null) try {pstmt.close();} catch (SQLException se) {}
 		}
-		
 		return dto;
-	}
-
+	}	
+	
 	@Override
-	public List<OrderDTO> selectsOrder() throws Exception {
+	public List<OrderDTO> selectOrderAll() throws Exception {
 		
 		Connection 		  conn 	  = null;
 		PreparedStatement pstmt   = null;
@@ -183,269 +195,8 @@ public class OrderDAO implements OrderInterface{
 		}
 		return dtoList;
 	}
-
 	@Override
-	public void delete_NO(int NEED_orderNO) throws Exception {
-		
-		Connection        conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"DELETE FROM ORDEOS WHERE O_NO=?");
-			pstmt.setInt(1, NEED_orderNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void delete_MNO(int NEED_memberNO) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"DELETE FROM ORDERS WHERE O_MNO=?");
-			pstmt.setInt(1, NEED_memberNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateNO_NO(int NEED_orderNO, int change_orderNO) throws Exception {
-		
-		Connection        conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=? "
-					+ "WHERE O_NO=?");
-			pstmt.setInt(1, change_orderNO);
-			pstmt.setInt(2, NEED_orderNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateNO_MNO(int NEED_memberNO, int change_orderNO) throws Exception {
-		
-		Connection 		  conn  = null;
-		PreparedStatement pstmt = null;;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_NO=? "
-					+ "WHERE O_MNO=?");
-			pstmt.setInt(1, change_orderNO);
-			pstmt.setInt(2, NEED_memberNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateMNO_NO(int NEED_orderNO, int change_memberNO) throws Exception {
-		
-		Connection        conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_MNO=? "
-					+ "WHERE O_NO=?");
-			pstmt.setInt(1, change_memberNO);
-			pstmt.setInt(2, NEED_orderNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updateMNO_MNO(int NEED_memberNO, int change_memberNO) throws Exception {
-		
-		Connection 		  conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS SET O_MNO=? "
-					+ "WHERE O_MNO=?");
-			pstmt.setInt(1, change_memberNO);
-			pstmt.setInt(2, NEED_memberNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updatePAY_NO(int NEED_orderNO, int change_PAY) throws Exception {
-		
-		Connection		  conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS O_PAY=? "
-					+ "WHERE O_NO=?");
-			pstmt.setInt(1, change_PAY);
-			pstmt.setInt(2, change_PAY);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public void updatePAY_MNO(int NEED_memberNO, int change_PAY) throws Exception {
-		
-		Connection 	      conn  = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"UPDATE ORDERS O_PAY=? "
-					+ "WHERE O_MNO");
-			pstmt.setInt(1, change_PAY);
-			pstmt.setInt(2, NEED_memberNO);
-			
-			pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-	}
-
-	@Override
-	public OrderDTO selectOrder(int NEED_orderNO) throws Exception {
-		
-		Connection        conn  = null;
-		PreparedStatement pstmt = null;
-		ResultSet         rs    = null;
-		OrderDTO 		  dto   = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY "
-					+ "FROM ORDERS "
-					+ "WHERE O_NO=?");
-			pstmt.setInt(1, NEED_orderNO);
-			
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				dto = new OrderDTO();
-				dto.setO_no(rs.getInt(1));
-				dto.setO_mno(rs.getInt(2));
-				dto.setO_pay(rs.getInt(3));
-			}
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			if (rs    != null) try {rs.close();}    catch (SQLException se) {}
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {pstmt.close();} catch (SQLException se) {}
-		}
-		return dto;
-	}
-
-	@Override
-	public List<OrderDTO> selectsOrders_PAY(int NEED_PAY) throws Exception {
-		
-		Connection		  conn    = null;
-		PreparedStatement pstmt   = null;
-		ResultSet		  rs      = null;
-		List<OrderDTO>    dtolist = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT O_NO, O_MNO, O_PAY "
-					+ "FROM ORDERS "
-					+ "WHERE O_PAY=?");
-			pstmt.setInt(1, NEED_PAY);
-			
-			rs = pstmt.executeQuery();
-			dtolist = new ArrayList<OrderDTO>();
-			
-			while (rs.next()) {
-				OrderDTO dto = new OrderDTO();
-				dto.setO_no(rs.getInt(1));
-				dto.setO_mno(rs.getInt(2));
-				dto.setO_pay(rs.getInt(3));
-				dtolist.add(dto);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-		return dtolist;
-	}
-
-	@Override
-	public List<OrderDTO> selectsOrders_MNO(int NEED_memberNO) throws Exception {
+	public List<OrderDTO> selectOrderAll(int o_mno) throws Exception {
 		
 		Connection 		  conn    = null;
 		PreparedStatement pstmt   = null;
@@ -458,7 +209,7 @@ public class OrderDAO implements OrderInterface{
 					"SELECT O_NO, O_MNO, O_PAY "
 					+ "FROM ORDERS "
 					+ "WHERE O_MNO=?");
-			pstmt.setInt(1, NEED_memberNO);
+			pstmt.setInt(1, o_mno);
 			
 			rs = pstmt.executeQuery();
 			dtolist = new ArrayList<OrderDTO>();
@@ -513,12 +264,42 @@ public class OrderDAO implements OrderInterface{
 	}
 
 	@Override
-	public List<Integer> selectsOrder_NO(int NEED_memberNO) throws Exception {
+	public List<Integer> selectO_noAll() throws Exception {
+		
+		Connection		  conn		  = null;
+		PreparedStatement pstmt		  = null;
+		ResultSet		  rs 		  = null;
+		List<Integer> 	  o_noList = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT O_NO "
+					+ "FROM ORDERS ");
+			
+			rs = pstmt.executeQuery();
+			o_noList = new ArrayList<Integer>();
+			
+			while (rs.next()) {
+				Integer o_no = new Integer(rs.getInt(1));
+				o_noList.add(o_no);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return o_noList;
+	}
+	@Override
+	public List<Integer> selectO_noAll(int o_mno) throws Exception {
 		
 		Connection 		  conn 			= null;
 		PreparedStatement pstmt 		= null;
 		ResultSet 		  rs 			= null;
-		List<Integer>	  orderNO_list  = null;
+		List<Integer>	  o_noList  = null;
 		
 		try {
 			conn  = getConnection();
@@ -526,14 +307,14 @@ public class OrderDAO implements OrderInterface{
 					"SELECT O_NO "
 					+ "FROM ORDERS "
 					+ "WHERE O_MNO=?");
-			pstmt.setInt(1, NEED_memberNO);
+			pstmt.setInt(1, o_mno);
 			
 			rs = pstmt.executeQuery();
-			orderNO_list = new ArrayList<Integer>();
+			o_noList = new ArrayList<Integer>();
 			
 			while (rs.next()) {
-				Integer orderNO = new Integer(rs.getInt(1));
-				orderNO_list.add(orderNO);
+				Integer o_no = new Integer(rs.getInt(1));
+				o_noList.add(o_no);
 			}
 			
 		} catch (Exception e) {
@@ -543,37 +324,7 @@ public class OrderDAO implements OrderInterface{
 			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
-		return orderNO_list;
+		return o_noList;
 	}
 
-	@Override
-	public List<Integer> selectsOrder_NO() throws Exception {
-		
-		Connection		  conn		  = null;
-		PreparedStatement pstmt		  = null;
-		ResultSet		  rs 		  = null;
-		List<Integer> 	  orderNOList = null;
-		
-		try {
-			conn  = getConnection();
-			pstmt = conn.prepareStatement(
-					"SELECT O_NO "
-					+ "FROM ORDERS ");
-			
-			rs = pstmt.executeQuery();
-			orderNOList = new ArrayList<Integer>();
-			
-			while (rs.next()) {
-				Integer orderNO = new Integer(rs.getInt(1));
-				orderNOList.add(orderNO);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
-			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
-			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
-		}
-		return orderNOList;
-	}
 }
