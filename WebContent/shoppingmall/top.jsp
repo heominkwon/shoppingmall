@@ -8,8 +8,13 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 <a href ="/jsp/shoppingmall/template.jsp">
 <img src="/jsp/img/logo1.png" width="120" height="150" border=0></a>
+=======
+<a href ="/shoppingmall/shoppingmall/template.jsp">
+<img src="/shoppingmall/img/logo1.png" width="120" height="150" border=0></a>
+>>>>>>> refs/heads/WEB_PAGE_FUNCTION_TEST
 
 </body>
 </html>

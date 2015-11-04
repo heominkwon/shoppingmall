@@ -9,76 +9,30 @@ public interface ProductInterface {
 
 	void insertProduct(ProductDTO product) throws Exception;
 
-	void deleteProduct(ProductDTO product) throws Exception;
+	int deleteProduct(int num, String passwd) throws Exception;
 	
 	void updateProduct(ProductDTO product) throws Exception;
 
 	ProductDTO selectProduct(ProductDTO product) throws Exception;
 	
+	void updateCategoryNO(String productName,int categoryNO) throws Exception;
 	
+	void updateName(String productName, String Name) throws Exception;
 	
-	void deleteProduct(int NEED_productNO) throws Exception;
+	void updatePrice(String productName, int price) throws Exception;
 	
-	void deleteProduct(String NEED_productNAME) throws Exception;
+	void updateCount(String productName, int count) throws Exception;
 	
+	void updateDesc(String productName, String desc) throws Exception;
 	
+	void updatePath(String productName, String path) throws Exception;
 	
-	void updateNO_NO(int NEED_productNO,int change_productNO) throws Exception;
+	String getProductName(int p_no) throws Exception;
 	
-	void updateNO_CNO(int NEED_categoryNO,int change_productNO) throws Exception;
+	int getProductCount() throws Exception;
 	
-	void updateNO_NAME(String NEED_productNAME,int change_productNO) throws Exception;
+	List getProducts(int start, int end) throws Exception;
 	
+	ProductDTO getProduct(int num) throws Exception;
 	
-	
-	void updateCNO_NO(int NEED_productNO,int change_categoryNO) throws Exception;
-	
-	void updateCNO_CNO(int NEED_categoryNO,int change_categoryNO) throws Exception;
-	
-	void updateCNO_NAME(String NEED_productNAME,int change_categoryNO) throws Exception;
-	
-	
-	
-	void updateName_NO(int NEED_productNO, String change_productName) throws Exception;
-	
-	void updateName_CNO(int NEED_categoryNO, String change_productName) throws Exception;
-	
-	void updateName_NAME(String NEED_productName, String change_productName) throws Exception;
-	
-	
-	
-	void updatePrice_NO(int NEED_productNO, int change_price) throws Exception;
-	
-	void updatePrice_NAME(String NEED_productName, int change_price) throws Exception;
-	
-	
-	
-	void updateCount_NO(int NEED_productNO, int change_count) throws Exception;
-	
-	void updateCount_NAME(String NEED_productNAME, int change_count) throws Exception;
-	
-	
-	
-	void updateDesc_NO(int NEED_productNO, String change_desc) throws Exception;
-	
-	void updateDesc_NAME(String NEED_productNAME, String change_desc) throws Exception;
-	
-	
-	void updatePath_NO(int NEED_productNO, String change_path) throws Exception;
-	
-	void updatePath_NAME(String NEED_productNAME, String change_path) throws Exception;
-	
-	
-	
-	ProductDTO selectProduct(int NEED_productNO) throws Exception;
-	
-	ProductDTO selectProduct(String NEED_productNAME) throws Exception;
-	
-	
-	
-	List<ProductDTO> selectsProduct_CNO(int NEED_categoryNO) throws Exception;
-	
-	List<Integer> selectsProduct_NO() throws Exception;
-	
-	Integer selectPrice_nNO(Integer need_no) throws Exception;
 }

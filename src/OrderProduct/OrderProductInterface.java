@@ -7,6 +7,8 @@ public interface OrderProductInterface {
 
 	Connection getConnection() throws Exception;
 	
+	int getOrderProductCount(int num) throws Exception;
+	
 	void insertOrderProduct(OrderProductDTO orderproduct) throws Exception;
 	
 	void deleteOrderProduct(OrderProductDTO orderproduct) throws Exception;
@@ -16,6 +18,8 @@ public interface OrderProductInterface {
 	OrderProductDTO selectOrderProduct(OrderProductDTO orderproduct) throws Exception;
 	
 	List<OrderProductDTO> selectsOrderProduct() throws Exception;
+	
+	List<OrderProductDTO> selectsOrderProducts(int num) throws Exception;
 	
 	
 	
@@ -40,6 +44,7 @@ public interface OrderProductInterface {
 	OrderProductDTO selectOrderProduct(int need_orderproductNO) throws Exception;
 	
 	
+	OrderProductDTO selectOrderProduct2(int need_orderproductNO) throws Exception;
 	
 	List<OrderProductDTO> selectsOrderProduct(int need_ONO) throws Exception;
 }

@@ -1,8 +1,13 @@
-package logon;
+package project1.logon;
 
-import java.sql.*;
-import javax.sql.*;
-import javax.naming.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 public class LogonDBBean {
 	
@@ -54,7 +59,32 @@ public class LogonDBBean {
 			if(conn != null) try {conn.close(); } catch(SQLException ex) {}
 		}
 	}
-	
+	public int getUserNo(String id) throws Exception{
+		int m_no = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+					"select M_NO from MEMBER where M_ID = ?");
+			pstmt.setString(1, id);
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()){
+				m_no= rs.getInt("M_NO");			
+			}				
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally {
+			if(rs != null) try {rs.close();} catch(SQLException ex){}
+			if(pstmt != null) try {pstmt.close();} catch(SQLException ex){}
+			if(conn != null) try {conn.close();} catch(SQLException ex){}
+		}
+		
+		return m_no;
+	}
 	public int userCheck(String id, String passwd) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;

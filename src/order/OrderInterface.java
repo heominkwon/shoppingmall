@@ -5,6 +5,14 @@ import java.util.List;
 
 public interface OrderInterface {
 	
+	int getMemOrderCount(int O_MNO) throws Exception;
+	
+	int getNewOrderCount() throws Exception;
+	
+	int getComOrderCount() throws Exception;
+	
+	int getOrderCount() throws Exception;
+	
 	Connection getConnection() throws Exception;
 	
 	void insertOrder(OrderDTO order) throws Exception;
@@ -16,6 +24,16 @@ public interface OrderInterface {
 	OrderDTO selectOrder(OrderDTO order) throws Exception;
 	
 	List<OrderDTO> selectsOrder() throws Exception;
+	
+	List<OrderDTO> selectsMemOrder(int start, int end, int O_MNO) throws Exception;
+	
+	List<OrderDTO> selectsNewOrder(int start, int end) throws Exception;
+	
+	List<OrderDTO> selectsComOrder(int start, int end) throws Exception;
+	
+	List<OrderDTO> selectsFinOrder()throws Exception;
+	
+	List<OrderDTO> selectsAgeFinOrder(int age, int year)throws Exception;
 	
 	void delete_NO(int NEED_orderNO) throws Exception;
 	
@@ -32,6 +50,8 @@ public interface OrderInterface {
 	void updatePAY_NO(int NEED_orderNO, int change_PAY) throws Exception;
 	
 	void updatePAY_MNO(int NEED_memberNO, int change_PAY) throws Exception;
+	
+	void updateO_address(int NEED_orderNO, String change_address) throws Exception;
 	
 	OrderDTO selectOrder(int NEED_orderNO) throws Exception;
 	

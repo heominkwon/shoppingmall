@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 
 public class CategoryDAO implements CategoryInterface{
 
@@ -17,6 +20,69 @@ public class CategoryDAO implements CategoryInterface{
 	
 	public static CategoryDAO getInstance(){
 		return instance;
+	}
+
+	@Override
+	public int getcategoryCount() throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int x=0;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select count(*) from category");
+			//board테이블에 레코드갯수를 요청하는 쿼리문
+			rs = pstmt.executeQuery();
+			if (rs.next()) {//게시글이 존재한다면 게시글의 총 갯수를 변수 x에 저장
+				x= rs.getInt(1); 
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return x; //총게시글의 수 반환
+	}
+	@Override
+	public List getCategorys(int start, int end) throws Exception{
+		//매개변수로 받은 start의 값의 줄부터 end의 값의 줄까지의 게시글들의 묶음을 List로 반환해주는 메소드이다.
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List CategoryList=null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select c_no, c_name, r from (select c_no, c_name, rownum r from (select c_no, c_name from category order by c_no desc) order by c_no desc) where r >= ? and r <= ?"); 
+					/* ref(게시글 그룹)번호는 내림차순으로 re_step(답변글 정렬순서)는 오름차순으로 정렬을해서 모든 게시글들을 정렬을하고
+					 * rownum r로써 줄번호를 매긴후 이메소드에서 받아온 매개변수값 start(시작줄번호)와 end(끝줄번호)값 사이에 게시글들을 요청하는 쿼리문 
+					 */
+					pstmt.setInt(1, start); 
+					pstmt.setInt(2, end); 
+
+					rs = pstmt.executeQuery();
+					if (rs.next()) {//start(시작줄번호)와 end(끝줄번호)값 사이에 게시글이 존재한다면
+						CategoryList = new ArrayList(end); 
+						do{ 
+							CategoryDTO category= new CategoryDTO();
+							category.setC_no(rs.getInt("c_no"));
+							category.setC_name(rs.getString("c_name"));						
+							CategoryList.add(category);
+						}while(rs.next());
+						//ProductList에 상품들을 list로 저장한다
+					}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+
+		
+		return CategoryList;
+	
 	}
 	
 	@Override
@@ -51,7 +117,39 @@ public class CategoryDAO implements CategoryInterface{
 			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
 		}
 	}
-
+	@Override
+	public int deleteCategory(int num, String passwd) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs= null;
+		String dbpasswd="";
+		int x=-1;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(
+			"select M_PW from member where M_ID =?");
+			pstmt.setString(1,"admin");
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				dbpasswd= rs.getString("M_PW");
+				if(dbpasswd.equals(passwd)){
+					pstmt = conn.prepareStatement(
+					"delete from category where C_NO=?");
+					pstmt.setInt(1, num);
+					pstmt.executeUpdate();
+					x= 1; 
+				}else
+					x= 0; 
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return x;
+	}
 	@Override
 	public void deleteCategory(CategoryDTO category) throws Exception {
 		
@@ -311,7 +409,7 @@ public class CategoryDAO implements CategoryInterface{
 			while (rs.next()) {
 				dto = new CategoryDTO();
 				dto.setC_no(rs.getInt(1));
-				dto.setC_name(rs.getInt(2));
+				dto.setC_name(rs.getString(2));
 			}
 			
 		} catch (Exception e) {

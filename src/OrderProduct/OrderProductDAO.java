@@ -17,7 +17,7 @@ public class OrderProductDAO implements OrderProductInterface{
 	
 	private static OrderProductDAO instance = new OrderProductDAO();
 	
-	public static OrderProductDAO getInstace() {
+	public static OrderProductDAO getInstance() {
 		return instance;
 	}
 	
@@ -27,6 +27,32 @@ public class OrderProductDAO implements OrderProductInterface{
 		Context envCtx  = (Context)initCtx.lookup("java:/comp/env");
 		DataSource ds   = (DataSource)envCtx.lookup("jdbc/orcl");
 		return ds.getConnection();
+	}
+	
+	public int getOrderProductCount(int num) throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int x=0;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select count(*) from order_product where OP_ONO=?");
+			//board테이블에 레코드갯수를 요청하는 쿼리문
+			pstmt.setInt(1, num);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {//게시글이 존재한다면 게시글의 총 갯수를 변수 x에 저장
+				x= rs.getInt(1); 
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+			if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+			if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+		}
+		return x; //총게시글의 수 반환
+
 	}
 
 	@Override
@@ -161,6 +187,41 @@ public class OrderProductDAO implements OrderProductInterface{
 					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
 					+ "FROM ORDER_PRODUCT ");
 			
+			rs = pstmt.executeQuery();
+			dtolist = new ArrayList<OrderProductDTO>();
+			
+			while (rs.next()) {
+				OrderProductDTO dto = new OrderProductDTO();
+				dto.setOP_no(rs.getInt(1));
+				dto.setOP_ono(rs.getInt(2));
+				dto.setOP_pno(rs.getInt(3));
+				dto.setOP_count(rs.getInt(4));
+				dto.setOP_price(rs.getInt(5));
+				dtolist.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs 	  != null) try {rs.close();}    catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return dtolist;
+	}
+	@Override
+	public List<OrderProductDTO> selectsOrderProducts(int num) throws Exception{
+		Connection		  	  conn    = null;
+		PreparedStatement	  pstmt   = null;
+		ResultSet 		  	  rs 	  = null;
+		List<OrderProductDTO> dtolist = null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
+					+ "FROM ORDER_PRODUCT where OP_ONO=?");
+			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			dtolist = new ArrayList<OrderProductDTO>();
 			
@@ -405,6 +466,43 @@ public class OrderProductDAO implements OrderProductInterface{
 		return dto;
 	}
 
+	@Override
+	public OrderProductDTO selectOrderProduct2(int need_orderproductNO) throws Exception {
+		
+		Connection		  conn 	= null;
+		PreparedStatement pstmt = null;
+		ResultSet		  rs 	= null;
+		OrderProductDTO	  dto 	= null;
+		
+		try {
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(
+					"SELECT "
+					+ "OP_NO, OP_ONO, OP_PNO, OP_COUNT, OP_PRICE "
+					+ "FROM ORDER_PRODUCT "
+					+ "WHERE OP_ONO=?");
+			pstmt.setInt(1, need_orderproductNO);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				dto = new OrderProductDTO();
+				dto.setOP_no(rs.getInt(1));
+				dto.setOP_no(rs.getInt(2));
+				dto.setOP_pno(rs.getInt(3));
+				dto.setOP_count(rs.getInt(4));
+				dto.setOP_price(rs.getInt(5));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs 	  != null) try {rs.close();} 	catch (SQLException se) {}
+			if (pstmt != null) try {pstmt.close();} catch (SQLException se) {}
+			if (conn  != null) try {conn.close();}  catch (SQLException se) {}
+		}
+		return dto;
+	}
 	
 	
 	@Override

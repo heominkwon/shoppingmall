@@ -1,4 +1,4 @@
-package logon;
+package project1.logon;
 
 public class LogonDataBean {
 

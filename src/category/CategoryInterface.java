@@ -1,10 +1,13 @@
 package category;
 
 import java.sql.Connection;
+import java.util.List;
 
 public interface CategoryInterface {
 
 	Connection getConnection() throws Exception;
+	
+	int getcategoryCount() throws Exception;
 
 	void insertCategory(CategoryDTO category) throws Exception;
 
@@ -13,6 +16,8 @@ public interface CategoryInterface {
 	void updateCategory(CategoryDTO category) throws Exception;
 
 	CategoryDTO selectCategory(CategoryDTO category) throws Exception;
+	
+	int deleteCategory(int num, String passwd) throws Exception;
 	
 	void deleteCategory(int NEED_categoryNO) throws Exception;
 	
@@ -29,5 +34,7 @@ public interface CategoryInterface {
 	CategoryDTO selectCategory(int NEED_categoryNO) throws Exception;
 	
 	CategoryDTO selectCategory(String NEED_categoryName) throws Exception;
+	
+	List getCategorys(int start, int end) throws Exception;
 
 }

@@ -123,7 +123,7 @@ function checkIt()
             onclick="javascript:window.location='inputForm.jsp'">
        </form></td>
      <%}else{%>
-             <td align="left">
+             <td align="left">   
              <%=session.getAttribute("memId")%>님이 방문하셨습니다
              	<form  method="post" action="logout.jsp">
              	 <input type="submit"  value="로그아웃" >
@@ -175,14 +175,9 @@ a{text-decoration:none;font-weight:bold:color:#ffffff:}
 <div id="maindiv">
 <p> <div onClick="SwitchMenu('sub1')" onmouseover="this.style.cursor='hand'"><B><font color="white">주문/배송</font></B></div>
     <span class="submenu" id="sub1">
-        - <a href="new_order.jsp" target="ppp"><font color="white">주문내역/배송현황</font></a><br/><br/>     
-        - <a href="cancel_order.jsp" target="ppp"><font color="white">주문취소/교환/반품</font></a><br/><br/> 
-        - <a href="change_order.jsp" target="ppp"><font color="white">배송지/주문내용변경</font></a><br/><br/>      
-    </span>
-<p> <div onClick="SwitchMenu('sub2')" onmouseover="this.style.cursor='hand'"><font color="white"><B>서비스정보</font></B></div>
-    <span class="submenu" id="sub2">
-        - <a href="event.jsp" target="ppp"><font color="white">이벤트</font></a><br>        
-       
+        - <a href="new_order.jsp" target="ppp"><font color="white">주문내역/구매확정</font></a><br/><br/>     
+        - <a href="cancle_order.jsp" target="ppp"><font color="white">주문교환/반품</font></a><br/><br/> 
+        - <a href="changeAddress.jsp" target="ppp"><font color="white">배송지/주문내용변경</font></a><br/><br/>      
     </span>
 
 <p> <div onClick="SwitchMenu('sub3')" onmouseover="this.style.cursor='hand'"><B><font color="white">나의정보</font></B></div>

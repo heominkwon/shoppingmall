@@ -10,7 +10,7 @@ public class ProductDTO {
 	private int p_count;
 	private String p_desc;
 	private String p_path;
-	private Timestamp p_regdate; 
+	private Timestamp p_regdate;
 	
 	public int getP_no(){
 		return this.p_no;
@@ -33,9 +33,10 @@ public class ProductDTO {
 	public String getP_path(){
 		return this.p_path;
 	}
-	public Timestamp getP_regdate(){
-		return this.p_regdate;
-	}
+	public Timestamp getP_regdate() {
+        return this.p_regdate;
+    } 
+	
 	
 	public void setP_no(int p_no){
 		this.p_no = p_no;
@@ -71,6 +72,6 @@ public class ProductDTO {
 		this.p_path = p_path;
 	}
 	public void setP_regdate(Timestamp p_regdate) {
-		this.p_regdate = p_regdate;
-	}
+        this.p_regdate = p_regdate;
+    } 
 }
